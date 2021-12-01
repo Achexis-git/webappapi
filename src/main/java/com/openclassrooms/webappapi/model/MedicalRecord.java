@@ -1,4 +1,4 @@
-package com.openclassrooms.model;
+package com.openclassrooms.webappapi.model;
 
 import java.util.List;
 import java.util.Map;
