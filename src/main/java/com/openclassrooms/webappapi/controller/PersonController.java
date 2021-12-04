@@ -9,7 +9,7 @@ import com.openclassrooms.webappapi.model.Persons;
 import com.openclassrooms.webappapi.repository.PersonRepository;
 
 @RestController
-@RequestMapping(path = "/persons")
+@RequestMapping(path = "/person")
 public class PersonController {
 	
 	@Autowired
