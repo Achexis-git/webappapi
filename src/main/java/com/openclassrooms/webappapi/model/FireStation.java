@@ -17,4 +17,20 @@ public class FireStation {
 		this.station = station;
 	}
 
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setStation(String station) {
+		this.station = station;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getStation() {
+		return station;
+	}
+
 }

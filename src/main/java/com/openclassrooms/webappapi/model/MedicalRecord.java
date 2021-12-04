@@ -5,7 +5,6 @@ import java.util.Map;
 
 import lombok.Data;
 
-@Data
 public class MedicalRecord {
 	
 	private String firstName;
@@ -24,5 +23,29 @@ public class MedicalRecord {
 		this.birthdate  = birthdate;
 		this.medication = medication;
 		this.allergies  = allergies;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setBirthdate(String birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getBirthdate() {
+		return birthdate;
 	}
 }
