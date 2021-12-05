@@ -10,14 +10,14 @@ public class MedicalRecord {
 	private String firstName;
 	private String lastName;
 	private String birthdate;
-	private Map<String,String> medication;
+	private List<String> medication;
 	private List<String> allergies;
 	
 	public MedicalRecord() {
 		
 	}
 	
-	public MedicalRecord(String firstName, String lastName, String birthdate, Map<String, String> medication, List<String> allergies) {
+	public MedicalRecord(String firstName, String lastName, String birthdate, List<String> medication, List<String> allergies) {
 		this.firstName  = firstName;
 		this.lastName   = lastName;
 		this.birthdate  = birthdate;
@@ -36,6 +36,14 @@ public class MedicalRecord {
 	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
 	}
+	
+	public void setMedication(List<String> medication) {
+		this.medication = medication;
+	}
+	
+	public void setAllergies(List<String> allergies) {
+		this.allergies = allergies;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -47,5 +55,13 @@ public class MedicalRecord {
 
 	public String getBirthdate() {
 		return birthdate;
+	}
+	
+	public List<String> getMedication() {
+		return medication;
+	}
+	
+	public List<String> getAllergies() {
+		return allergies;
 	}
 }
