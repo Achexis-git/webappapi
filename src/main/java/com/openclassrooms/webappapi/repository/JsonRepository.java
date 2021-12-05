@@ -4,9 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,6 +37,7 @@ public class JsonRepository {
 
 	}
 
+	//TODO: Ajouter un booléen qui vérifie si le fichier a été changer depuis le dernier chargement (static)
 	public Persons getAllPersons() {
 		// read json & update persons & fireStations & medicalRecords
 		readJsonPerson();
@@ -89,7 +88,7 @@ public class JsonRepository {
 			for (int i = 0; i < personList.size(); i++) {
 				objJson = (JSONObject) personList.get(i);
 				logger.trace("Get the person " + i);
-				pers = parsePersonObject(objJson);
+				pers = parsePersonObject(objJson, i);
 				logger.trace("Cast the person");
 				persons.addPerson(pers);
 				logger.trace("Add the person");
@@ -129,7 +128,7 @@ public class JsonRepository {
 		logger.info("All correctly loaded");
 	}
 
-	private static Person parsePersonObject(JSONObject person) {
+	private static Person parsePersonObject(JSONObject person, int id) {
 		// Read the JSONObject and return a Person with the right attributes
 
 		String firstName = (String) person.get("firstName");
@@ -140,7 +139,7 @@ public class JsonRepository {
 		String phone = (String) person.get("phone");
 		String email = (String) person.get("email");
 
-		return new Person(0, firstName, lastName, address, city, zip, phone, email);
+		return new Person(id, firstName, lastName, address, city, zip, phone, email);
 	}
 
 	private static FireStation parseFireStationObject(JSONObject fireStation) {
@@ -149,7 +148,7 @@ public class JsonRepository {
 		String address = (String) fireStation.get("address");
 		String station = (String) fireStation.get("station");
 
-		return new FireStation(address, station);
+		return new FireStation(address, Integer.parseInt(station));
 	}
 
 	private static MedicalRecord parseMedicalRecordObject(JSONObject medicalRecord) {
@@ -159,7 +158,6 @@ public class JsonRepository {
 		String lastName  = (String) medicalRecord.get("lastName");
 		String birthdate = (String) medicalRecord.get("birthdate");
 		
-		// TODO: Ajouter les 2 attributs manquants
 		Object mObj = medicalRecord.get("medications");
 		logger.trace("Get the medication : " + mObj);
 		List<String> medication = toList((JSONArray) mObj);
