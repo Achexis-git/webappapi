@@ -21,5 +21,8 @@ public class FireStations {
 	public void addFireStation(FireStation fs) {
 		this.fsList.add(fs);
 	}
-
+	
+	public int numberOfFireStations() {
+		return fsList.size();
+	}
 }

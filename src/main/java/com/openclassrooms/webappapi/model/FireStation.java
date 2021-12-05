@@ -6,13 +6,13 @@ import lombok.Data;
 public class FireStation {
 	
 	private String address;
-	private String station;
+	private int station;
 	
 	public FireStation() {
 		
 	}
 	
-	public FireStation(String address, String station) {
+	public FireStation(String address, int station) {
 		this.address = address;
 		this.station = station;
 	}
@@ -21,7 +21,7 @@ public class FireStation {
 		this.address = address;
 	}
 
-	public void setStation(String station) {
+	public void setStation(int station) {
 		this.station = station;
 	}
 
@@ -29,7 +29,7 @@ public class FireStation {
 		return address;
 	}
 
-	public String getStation() {
+	public int getStation() {
 		return station;
 	}
 

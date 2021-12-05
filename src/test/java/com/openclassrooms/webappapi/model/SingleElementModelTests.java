@@ -36,10 +36,10 @@ public class SingleElementModelTests {
 		FireStation fs = new FireStation();
 		
 		fs.setAddress("Rue de l'église");
-		fs.setStation("1");
+		fs.setStation(1);
 		
 		assertEquals(fs.getAddress(), "Rue de l'église");
-		assertEquals(fs.getStation(), "1");
+		assertEquals(fs.getStation(), 1);
 	}
 	
 	@Test

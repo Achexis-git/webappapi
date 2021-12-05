@@ -24,4 +24,8 @@ public class Persons {
 	public void addPerson(Person person) {
 		this.personList.add(person);
 	}
+	
+	public void removePerson() {
+		
+	}
 }
