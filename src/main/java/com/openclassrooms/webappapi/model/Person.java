@@ -27,6 +27,7 @@ public class Person {
 		this.city      = city;
 		this.zip       = zip;
 		this.phone     = phone;
+		this.email     = email;
 	}
 
 	public void setId(int id) {

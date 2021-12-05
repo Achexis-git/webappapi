@@ -6,18 +6,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.webappapi.model.Persons;
-import com.openclassrooms.webappapi.repository.PersonRepository;
+import com.openclassrooms.webappapi.repository.JsonRepository;
 
 @RestController
 @RequestMapping(path = "/person")
 public class PersonController {
 	
 	@Autowired
-	private PersonRepository personRepository;
+	private JsonRepository jsonRepository;
 	
 	@GetMapping(path="/", produces="application/json")
 	public Persons getPersons() {
-		return personRepository.getAllPersons();
+		return jsonRepository.getAllPersons();
 	}
 	
 	
