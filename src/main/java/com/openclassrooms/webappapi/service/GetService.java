@@ -12,8 +12,11 @@ import org.springframework.stereotype.Service;
 
 import com.openclassrooms.webappapi.WebappapiApplication;
 import com.openclassrooms.webappapi.model.PersonInfo;
+import com.openclassrooms.webappapi.model.Adult;
+import com.openclassrooms.webappapi.model.Child;
 import com.openclassrooms.webappapi.model.FireStation;
 import com.openclassrooms.webappapi.model.Home;
+import com.openclassrooms.webappapi.model.HomeChildren;
 import com.openclassrooms.webappapi.model.HomeInhabitant;
 import com.openclassrooms.webappapi.model.MedicalRecord;
 import com.openclassrooms.webappapi.model.Person;
@@ -62,13 +65,54 @@ public class GetService {
 	}
 
 	// TODO: Compléter celui-là
-	public List<Persons> getEnfantAddress(String address) {
-		List<Person> persons = jsonRepository.getAllPersons().getPersonList();
-		List<MedicalRecord> medicalRecords = jsonRepository.getAllMedicalRecords().getMrList();
+	public HomeChildren getEnfantAddress(String address) {
+		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
+		List<MedicalRecord> mrList = jsonRepository.getAllMedicalRecords().getMrList();
 
-		Persons minors = new Persons();
-		Persons majors = new Persons();
-		return null;
+		HomeChildren hc = new HomeChildren();
+		List<Child> childList = new ArrayList<Child>();
+		List<Adult> adultList = new ArrayList<Adult>();
+		hc.setAddress(address);
+
+		// 1) Parcours la liste de personnes
+		for (int i = 0; i < pList.size(); i++) {
+			Person p = pList.get(i);
+			// 2) Si à la bonne adresse
+			if (p.getAddress().compareTo(address) == 0) {
+				// 3) On regarde le medical record
+				for (MedicalRecord mr : mrList) {
+					// 4) Regarde si nom et prénom match
+					if (mr.getFirstName().compareTo(p.getFirstName()) == 0
+							& mr.getLastName().compareTo(p.getLastName()) == 0) {
+						// 5) On regarde l'age
+						int age = computeAge(mr.getBirthdate());
+						// 6) Complète en fonction
+						if (age > 18) {
+							Adult a = new Adult();
+							a.setFirstName(p.getFirstName());
+							a.setLastName(p.getLastName());
+							adultList.add(a);
+						} else {
+							Child c = new Child();
+							c.setFirstName(p.getFirstName());
+							c.setLastName(p.getLastName());
+							c.setAge(age);
+							childList.add(c);
+						}
+						// 7) Remove le mr et break la boucle (cas même nom prénom)
+						mrList.remove(mr);
+						break;
+					}
+				}
+				pList.remove(i);
+				i--; // Pour équilibre avec le remove
+			}
+		}
+
+		hc.setAdultList(adultList);
+		hc.setChildList(childList);
+
+		return hc;
 	}
 
 	public List<String> getPhoneCloseToFirestation(String addressFirestation) {
@@ -228,7 +272,8 @@ public class GetService {
 
 		// 1) Parcours la liste de personnes
 		logger.debug("Ready to browse the person list");
-		for (int i=0; i<pList.size(); i++) { // Peut pas utiliser l'autre boucle car remove des éléments dans la boucle
+		for (int i = 0; i < pList.size(); i++) { // Peut pas utiliser l'autre boucle car remove des éléments dans la
+													// boucle
 			Person p = pList.get(i);
 			// 2) Si le bon nom et prénom
 			if (p.getFirstName().compareTo(firstName) == 0 & p.getLastName().compareTo(lastName) == 0) {

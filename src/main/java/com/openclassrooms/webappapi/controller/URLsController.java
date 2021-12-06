@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.webappapi.WebappapiApplication;
 import com.openclassrooms.webappapi.model.Home;
+import com.openclassrooms.webappapi.model.HomeChildren;
 import com.openclassrooms.webappapi.model.PersonInfo;
 import com.openclassrooms.webappapi.model.PersonPosologie;
 import com.openclassrooms.webappapi.model.Persons;
@@ -32,13 +33,12 @@ public class URLsController {
 		return getService.getFirestationStationNumber(sn);
 	}
 	
-	/*
 	// http://localhost:8080/childAlert?address=<address>
 	@GetMapping("/childAlert")
-	public List<Persons> getEnfantAddress(@RequestParam String address){
+	public HomeChildren getEnfantAddress(@RequestParam String address){
 		logger.info("Request 2 received");
 		return getService.getEnfantAddress(address);
-	}*/
+	}
 	
 	// http://localhost:8080/phoneAlert?firestation=<firestation_number>
 	@GetMapping("/phoneAlert")
