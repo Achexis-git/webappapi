@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.webappapi.WebappapiApplication;
+import com.openclassrooms.webappapi.model.Home;
 import com.openclassrooms.webappapi.model.PersonPosologie;
 import com.openclassrooms.webappapi.model.Persons;
 import com.openclassrooms.webappapi.service.GetService;
@@ -56,10 +57,9 @@ public class URLsController {
 	// http://localhost:8080/flood/stations?stations=<a list of station_numbers>
 	// ex : http://localhost:8080/flood/stations?stations=1&stations=2
 	@GetMapping("/flood/stations")
-	public List<Integer> getFloodStationsStations(@RequestParam List<Integer> stations) {
+	public List<Home> getFloodStationsStations(@RequestParam List<Integer> stations) {
 		logger.info("Request 5 received");
-		// List<Integer> stationsList = new ArrayList<Integer>();
-		return stations;
+		return getService.getHomesCloseToStations(stations);
 	}
 		
 	// http://localhost:8080/communityEmail?city=<city>

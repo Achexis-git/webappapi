@@ -1,6 +1,7 @@
 package com.openclassrooms.webappapi.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.openclassrooms.webappapi.WebappapiApplication;
 import com.openclassrooms.webappapi.model.FireStation;
+import com.openclassrooms.webappapi.model.Home;
+import com.openclassrooms.webappapi.model.HomeInhabitant;
 import com.openclassrooms.webappapi.model.MedicalRecord;
 import com.openclassrooms.webappapi.model.Person;
 import com.openclassrooms.webappapi.model.PersonPosologie;
@@ -135,5 +138,87 @@ public class GetService {
 		
 		
 		return ppList;
+	}
+
+	public List<Home> getHomesCloseToStations(List<Integer> stations) {
+		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
+		List<MedicalRecord> mrList = jsonRepository.getAllMedicalRecords().getMrList();
+		List<FireStation> fsList = jsonRepository.getAllFireStations().getFsList();
+		
+		List<Home> homes = new ArrayList<Home>();
+		
+		logger.debug("Taille de la liste " + fsList.size());
+		// fsList 3x trop grande
+		// mrList 2x trop grande
+		// => Bug dans jsonRepository / trouvé dois reset les attributs avant de les reremplir à la lecturedu fichier
+		
+		// 1) Parcours les firestations
+		for(FireStation fs : fsList) {
+			logger.trace("Tour de boucle fs");
+			Home home = new Home();
+			// 2) Si le numéro de la firestation est dans la liste des station number
+			if(stations.contains(fs.getStation())) {
+				logger.trace("Dans la condition");
+				// 3) On crée un new Home et on initialise son adresse
+				home.setAddress(fs.getAddress());
+				// 4) Parcours la liste des personnes pour voir qui habite là
+				for(Person p : pList) {
+					// 5) Si personne à la bonne adresse
+					if(p.getAddress().compareTo(home.getAddress()) == 0) {
+						// 6) On crée un HomeInhabitant et on initialise ses valeurs
+						HomeInhabitant hi = new HomeInhabitant();
+						hi.setFirstName(p.getFirstName());
+						hi.setLastName(p.getLastName());
+						hi.setPhone(p.getPhone());
+						// 7) Parcours les medical record pour trouver notre habitant
+						for(MedicalRecord mr : mrList) {
+							// 8) Si le même nom et prénom
+							if(mr.getFirstName().compareTo(hi.getFirstName()) == 0 & mr.getLastName().compareTo(hi.getLastName()) == 0) {
+								// 9) On ajoute le MR à hi
+								hi.setMedication(mr.getMedication());
+								hi.setAllergies(mr.getAllergies());
+								// Calcule age
+								hi.setAge(computeAge(mr.getBirthdate()));
+							}
+						}
+						// 10) Ajoute l'habitant au foyer
+						home.addHomeInhabitant(hi);
+					}
+				}
+				// 11) On ajoute le foyer à la liste de foyers
+				homes.add(home);
+			}
+		}
+		return homes;
 	}	
+	
+	private int computeAge(String birthday) {
+		Calendar today = Calendar.getInstance();
+		Calendar birthdayCal = Calendar.getInstance();
+		
+		logger.trace("Birthday : " + birthday);
+		String[] ls = birthday.split("/");
+		logger.trace("List of birthday date : " + ls[0] + "/" + ls[1] + "/" + ls[2]);
+		
+		try {
+			// MM/DD/YYYY
+			birthdayCal.set(Integer.parseInt(ls[2]), Integer.parseInt(ls[0]), Integer.parseInt(ls[1]));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		
+		double age = (double) (today.getTimeInMillis() - birthdayCal.getTimeInMillis());
+		logger.trace("L'âge est de : " + age + "ms");
+		age = age / (1000.0 * 60.0 * 60.0 * 24.0 * 365.0);
+		logger.trace("L'âge est de : " + age + "ans");
+		
+		return (int) age;
+	}
 }
+
+
+
+
+
+
+
