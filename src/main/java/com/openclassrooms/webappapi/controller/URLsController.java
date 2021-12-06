@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.webappapi.WebappapiApplication;
 import com.openclassrooms.webappapi.model.Home;
+import com.openclassrooms.webappapi.model.PersonInfo;
 import com.openclassrooms.webappapi.model.PersonPosologie;
 import com.openclassrooms.webappapi.model.Persons;
 import com.openclassrooms.webappapi.service.GetService;
@@ -60,6 +61,14 @@ public class URLsController {
 	public List<Home> getFloodStationsStations(@RequestParam List<Integer> stations) {
 		logger.info("Request 5 received");
 		return getService.getHomesCloseToStations(stations);
+	}
+	
+	// http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
+	@GetMapping("/personInfo")
+	public List<PersonInfo> getpersonInfoName(@RequestParam String firstName, @RequestParam String lastName) {
+		logger.info("Request 6 received");
+		// List<PersonInfo> pi = getService.getPersonInfo(firstName, lastName); 
+		return getService.getPersonInfo(firstName, lastName);
 	}
 		
 	// http://localhost:8080/communityEmail?city=<city>
