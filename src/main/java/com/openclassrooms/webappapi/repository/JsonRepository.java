@@ -84,6 +84,7 @@ public class JsonRepository {
 			//TODO: Dois y avoir moyen de faire ça de façon plus smart
 			
 			// Browse personList and add each person to persons
+			persons = new Persons(); // Reset the attribute
 			Person pers;
 			for (int i = 0; i < personList.size(); i++) {
 				objJson = (JSONObject) personList.get(i);
@@ -97,6 +98,7 @@ public class JsonRepository {
 			}
 
 			// Browse fireStationList and add each fire station to fireStaions
+			fireStations = new FireStations(); // Reset the attribute
 			FireStation fs;
 			for (int i = 0; i < fireStationList.size(); i++) {
 				objJson = (JSONObject) fireStationList.get(i);
@@ -108,6 +110,7 @@ public class JsonRepository {
 			}
 
 			// Browse personList and add each person to the object persons Person pers;
+			medicalRecords = new MedicalRecords(); // Reset the attribute
 			MedicalRecord mr;
 			for (int i = 0; i < medicalRecordList.size(); i++) {
 				objJson = (JSONObject) medicalRecordList.get(i);
