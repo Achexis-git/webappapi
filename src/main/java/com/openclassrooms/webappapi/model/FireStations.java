@@ -11,11 +11,11 @@ public class FireStations {
 	}
 	
 	public List<FireStation> getFsList() {
-		return fsList;
+		return new ArrayList<FireStation>(fsList);
 	}
 	
 	public void setFsList(List<FireStation> fsList) {
-		this.fsList = fsList;
+		this.fsList = new ArrayList<FireStation>(fsList);
 	}
 	
 	public void addFireStation(FireStation fs) {

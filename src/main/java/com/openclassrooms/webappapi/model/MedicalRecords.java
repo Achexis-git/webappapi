@@ -12,11 +12,11 @@ public class MedicalRecords {
 	}
 	
 	public List<MedicalRecord> getMrList() {
-		return mrList;
+		return new ArrayList<MedicalRecord>(mrList);
 	}
 	
 	public void setMrList(List<MedicalRecord> mrList) {
-		this.mrList = mrList;
+		this.mrList = new ArrayList<MedicalRecord>(mrList);
 	}
 	
 	public void addMedicalRecord(MedicalRecord mr) {

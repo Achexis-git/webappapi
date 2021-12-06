@@ -14,11 +14,11 @@ public class Persons {
 		if(personList == null) {
 			personList = new ArrayList<>();
 		}
-		return personList;
+		return new ArrayList<Person>(personList);
 	}
 	
 	public void setPersonList(List<Person> personList) {
-		this.personList = personList;
+		this.personList = new ArrayList<Person>(personList);
 	}
 	
 	public void addPerson(Person person) {
