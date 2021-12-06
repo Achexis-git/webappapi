@@ -1,5 +1,6 @@
 package com.openclassrooms.webappapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.webappapi.WebappapiApplication;
+import com.openclassrooms.webappapi.model.PersonPosologie;
 import com.openclassrooms.webappapi.model.Persons;
 import com.openclassrooms.webappapi.service.GetService;
 
@@ -43,6 +45,23 @@ public class URLsController {
 		return getService.getPhoneCloseToFirestation(address);
 	}
 	
+	// http://localhost:8080/fire?address=<address>
+	@GetMapping("/fire")
+	public List<PersonPosologie> getFireAddress(@RequestParam String address) {
+		logger.info("Request 4 received");
+		return getService.getPosologieCloseToFirestation(address);
+		//TODO: Compléter la méthode au dessus & fonctionne pas
+	}
+	
+	// http://localhost:8080/flood/stations?stations=<a list of station_numbers>
+	// ex : http://localhost:8080/flood/stations?stations=1&stations=2
+	@GetMapping("/flood/stations")
+	public List<Integer> getFloodStationsStations(@RequestParam List<Integer> stations) {
+		logger.info("Request 5 received");
+		// List<Integer> stationsList = new ArrayList<Integer>();
+		return stations;
+	}
+		
 	// http://localhost:8080/communityEmail?city=<city>
 	@GetMapping("/communityEmail")
 	public List<String> getCommunityEmailCity(@RequestParam String city) {

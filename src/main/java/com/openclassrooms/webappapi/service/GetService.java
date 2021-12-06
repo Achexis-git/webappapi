@@ -4,17 +4,22 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.webappapi.WebappapiApplication;
 import com.openclassrooms.webappapi.model.FireStation;
 import com.openclassrooms.webappapi.model.MedicalRecord;
 import com.openclassrooms.webappapi.model.Person;
+import com.openclassrooms.webappapi.model.PersonPosologie;
 import com.openclassrooms.webappapi.model.Persons;
 import com.openclassrooms.webappapi.repository.JsonRepository;
 
 @Service
 public class GetService {
+	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 	
 	@Autowired
 	private JsonRepository jsonRepository;
@@ -93,5 +98,42 @@ public class GetService {
 		// Enlève les doublons en transformant la liste en set puis re en liste
 		emails = new ArrayList<>(new HashSet<String>(emails));
 		return emails;
+	}
+
+	public List<PersonPosologie> getPosologieCloseToFirestation(String address) {
+		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
+		List<MedicalRecord> mrList = jsonRepository.getAllMedicalRecords().getMrList();
+		List<FireStation> fsList = jsonRepository.getAllFireStations().getFsList();
+		
+		List<PersonPosologie> ppList = new ArrayList<PersonPosologie>(); 
+		
+		// Parcours les personnes
+		Person p;
+		PersonPosologie pp;
+		for(int i=0; i<pList.size(); i++) {
+			// Si c'est la bonne adresse
+			p = pList.get(i);
+			if(p.getAddress().compareTo(address) == 0) {
+				logger.info("Tour de la boucle " + i);
+				// On crée un PersonPosologie qui à les attribut de la personne
+				pp = new PersonPosologie();
+				pp.setFirstName(p.getFirstName());
+				pp.setLastName(p.getLastName());
+				pp.setPhone(p.getPhone());
+				
+				pp.setAge(0);
+				pp.setMedication(null);
+				pp.setAllergies(null);
+				// On ajoute ce pp à la liste
+				ppList.add(pp);
+				logger.info("Ajout de pp");
+			}
+		}
+		
+		//TODO: Compléter la posologie et ajouter le numéro de caserne
+		// On ajoute les médications et allergies
+		
+		
+		return ppList;
 	}	
 }
