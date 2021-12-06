@@ -38,22 +38,29 @@ public class JsonRepository {
 	}
 
 	//TODO: Ajouter un booléen qui vérifie si le fichier a été changer depuis le dernier chargement (static)
+	//      et envoyer des copies d'objets pas les objets
 	public Persons getAllPersons() {
 		// read json & update persons & fireStations & medicalRecords
 		readJsonPerson();
-		return persons;
+		Persons p = new Persons();
+		p.setPersonList(persons.getPersonList());
+		return p;
 	}
 
 	public FireStations getAllFireStations() {
 		// read json & update persons & fireStations & medicalRecords
 		readJsonPerson();
-		return fireStations;
+		FireStations fs = new FireStations();
+		fs.setFsList(fireStations.getFsList());
+		return fs;
 	}
 
 	public MedicalRecords getAllMedicalRecords() {
 		// read json & update persons & fireStations & medicalRecords
 		readJsonPerson();
-		return medicalRecords;
+		MedicalRecords mr = new MedicalRecords();
+		mr.setMrList(medicalRecords.getMrList());
+		return mr;
 	}
 
 	// @SuppressWarnings("unchecked")
