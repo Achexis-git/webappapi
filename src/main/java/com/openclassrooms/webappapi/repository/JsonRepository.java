@@ -33,15 +33,22 @@ public class JsonRepository {
 	private static FireStations fireStations = new FireStations();
 	private static MedicalRecords medicalRecords = new MedicalRecords();
 
+	// If modify the file & attributes not update => true (need to reread the file)
+	// Modify the file => turn true
+	// Read the file => turn false
+	// Prevent multiple reading
+	private static boolean fileChanged = true;
+
 	public JsonRepository() {
 
 	}
 
-	// TODO: Ajouter un booléen qui vérifie si le fichier a été changer depuis le
-	// dernier chargement (static)
 	public Persons getAllPersons() {
 		// read json & update persons & fireStations & medicalRecords
-		readJsonPerson();
+		if (fileChanged) {
+			readJsonPerson();
+			fileChanged = false;
+		}
 		Persons p = new Persons();
 		p.setPersonList(persons.getPersonList());
 		return p;
@@ -49,7 +56,10 @@ public class JsonRepository {
 
 	public FireStations getAllFireStations() {
 		// read json & update persons & fireStations & medicalRecords
-		readJsonPerson();
+		if (fileChanged) {
+			readJsonPerson();
+			fileChanged = false;
+		}
 		FireStations fs = new FireStations();
 		fs.setFsList(fireStations.getFsList());
 		return fs;
@@ -57,7 +67,10 @@ public class JsonRepository {
 
 	public MedicalRecords getAllMedicalRecords() {
 		// read json & update persons & fireStations & medicalRecords
-		readJsonPerson();
+		if (fileChanged) {
+			readJsonPerson();
+			fileChanged = false;
+		}
 		MedicalRecords mr = new MedicalRecords();
 		mr.setMrList(medicalRecords.getMrList());
 		return mr;
