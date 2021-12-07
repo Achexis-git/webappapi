@@ -247,19 +247,20 @@ public class GetService {
 		// fsList 3x trop grande
 		// mrList 2x trop grande
 		// => Bug dans jsonRepository / trouvé dois reset les attributs avant de les
-		// reremplir à la lecturedu fichier
+		// reremplir à la lecture du fichier
 
 		// 1) Parcours les firestations
 		for (FireStation fs : fsList) {
 			logger.trace("Tour de boucle fs");
-			Home home = new Home();
 			// 2) Si le numéro de la firestation est dans la liste des station number
 			if (stations.contains(fs.getStation())) {
 				logger.trace("Dans la condition");
 				// 3) On crée un new Home et on initialise son adresse
+				Home home = new Home();
 				home.setAddress(fs.getAddress());
 				// 4) Parcours la liste des personnes pour voir qui habite là
-				for (Person p : pList) {
+				for (int i = 0; i < pList.size(); i++) {
+					Person p = pList.get(i);
 					// 5) Si personne à la bonne adresse
 					if (p.getAddress().compareTo(home.getAddress()) == 0) {
 						// 6) On crée un HomeInhabitant et on initialise ses valeurs
@@ -280,6 +281,11 @@ public class GetService {
 								hi.setAllergies(mr.getAllergies());
 								// Calcule age
 								hi.setAge(computeAge(mr.getBirthdate()));
+								// 9.1) Pop le mr et break la boucle en cas de même nom prénom
+								mrList.remove(mr);
+								pList.remove(i);
+								i--;
+								break;
 							}
 						}
 						// 10) Ajoute l'habitant au foyer
