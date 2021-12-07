@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.webappapi.WebappapiApplication;
 import com.openclassrooms.webappapi.model.Home;
 import com.openclassrooms.webappapi.model.HomeChildren;
+import com.openclassrooms.webappapi.model.InhabitantFire;
 import com.openclassrooms.webappapi.model.PersonInfo;
-import com.openclassrooms.webappapi.model.PersonPosologie;
 import com.openclassrooms.webappapi.model.Persons;
 import com.openclassrooms.webappapi.service.GetService;
 
@@ -49,10 +49,9 @@ public class URLsController {
 	
 	// http://localhost:8080/fire?address=<address>
 	@GetMapping("/fire")
-	public List<PersonPosologie> getFireAddress(@RequestParam String address) {
+	public InhabitantFire getFireAddress(@RequestParam String address) {
 		logger.info("Request 4 received");
 		return getService.getPosologieCloseToFirestation(address);
-		//TODO: Compléter la méthode au dessus & fonctionne pas
 	}
 	
 	// http://localhost:8080/flood/stations?stations=<a list of station_numbers>

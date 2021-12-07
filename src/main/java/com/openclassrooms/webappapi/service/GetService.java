@@ -18,9 +18,9 @@ import com.openclassrooms.webappapi.model.FireStation;
 import com.openclassrooms.webappapi.model.Home;
 import com.openclassrooms.webappapi.model.HomeChildren;
 import com.openclassrooms.webappapi.model.HomeInhabitant;
+import com.openclassrooms.webappapi.model.InhabitantFire;
 import com.openclassrooms.webappapi.model.MedicalRecord;
 import com.openclassrooms.webappapi.model.Person;
-import com.openclassrooms.webappapi.model.PersonPosologie;
 import com.openclassrooms.webappapi.model.Persons;
 import com.openclassrooms.webappapi.repository.JsonRepository;
 
@@ -159,40 +159,62 @@ public class GetService {
 		return emails;
 	}
 
-	public List<PersonPosologie> getPosologieCloseToFirestation(String address) {
+	public InhabitantFire getPosologieCloseToFirestation(String address) {
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
 		List<MedicalRecord> mrList = jsonRepository.getAllMedicalRecords().getMrList();
 		List<FireStation> fsList = jsonRepository.getAllFireStations().getFsList();
 
-		List<PersonPosologie> ppList = new ArrayList<PersonPosologie>();
+		InhabitantFire iFire = new InhabitantFire();
 
-		// Parcours les personnes
-		Person p;
-		PersonPosologie pp;
-		for (int i = 0; i < pList.size(); i++) {
-			// Si c'est la bonne adresse
-			p = pList.get(i);
-			if (p.getAddress().compareTo(address) == 0) {
-				logger.info("Tour de la boucle " + i);
-				// On crée un PersonPosologie qui à les attribut de la personne
-				pp = new PersonPosologie();
-				pp.setFirstName(p.getFirstName());
-				pp.setLastName(p.getLastName());
-				pp.setPhone(p.getPhone());
-
-				pp.setAge(0);
-				pp.setMedication(null);
-				pp.setAllergies(null);
-				// On ajoute ce pp à la liste
-				ppList.add(pp);
-				logger.info("Ajout de pp");
+		// 1) Cherche le numéro de station
+		// 1.1) Parcours la liste des stations
+		for (FireStation fs : fsList) {
+			// 1.2) Si bonne adresse
+			if (fs.getAddress().compareTo(address) == 0) {
+				// 1.3) Set le numéro de station
+				iFire.setStationNumber(fs.getStation());
+				break;
 			}
 		}
+
+		// 2) Cherche les personnes qui vivent à l'adresse
+		Home home = new Home();
+		home.setAddress(address);
+		// 2.1) Parcours la liste de personnes
+		for (Person p : pList) {
+			// 2.2) Si bonne adresse
+			if (p.getAddress().compareTo(address) == 0) {
+				// 2.3) Ajoute les données à hi
+				HomeInhabitant hi = new HomeInhabitant();
+				hi.setFirstName(p.getFirstName());
+				hi.setLastName(p.getLastName());
+				hi.setPhone(p.getPhone());
+				// 2.4) Parcours le medical record
+				for (MedicalRecord mr : mrList) {
+					// 2.5 Si bon nom prénom
+					if (mr.getFirstName().compareTo(p.getFirstName()) == 0
+							& mr.getLastName().compareTo(p.getLastName()) == 0) {
+						// 2.6) Ajoute le mr
+						hi.setMedication(mr.getMedication());
+						hi.setAllergies(mr.getAllergies());
+						hi.setAge(computeAge(mr.getBirthdate()));
+						// 2.7) Remove mr dans le cas de même nom prénom et break
+						mrList.remove(mr);
+						break;
+					}
+				}
+				// 2.8) Ajoute l'hi au home
+				home.addHomeInhabitant(hi);
+			}
+		}
+		
+		// 2.9) Ajoute le home à iFire
+		iFire.setHome(home);
 
 		// TODO: Compléter la posologie et ajouter le numéro de caserne
 		// On ajoute les médications et allergies
 
-		return ppList;
+		return iFire;
 	}
 
 	public List<Home> getHomesCloseToStations(List<Integer> stations) {
