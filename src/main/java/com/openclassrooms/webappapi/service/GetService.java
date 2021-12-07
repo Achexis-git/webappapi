@@ -64,7 +64,6 @@ public class GetService {
 		return persons;
 	}
 
-	// TODO: Compléter celui-là
 	public HomeChildren getEnfantAddress(String address) {
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
 		List<MedicalRecord> mrList = jsonRepository.getAllMedicalRecords().getMrList();
@@ -105,7 +104,7 @@ public class GetService {
 					}
 				}
 				pList.remove(i);
-				i--; // Pour équilibre avec le remove
+				i--; // 8) Pour équilibre avec le remove
 			}
 		}
 
@@ -115,17 +114,29 @@ public class GetService {
 		return hc;
 	}
 
-	public List<String> getPhoneCloseToFirestation(String addressFirestation) {
+	public List<String> getPhoneCloseToFirestation(int stationNumber) {
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
+		List<FireStation> fsList = jsonRepository.getAllFireStations().getFsList();
 
 		List<String> phoneList = new ArrayList<String>();
 
-		for (Person p : pList) {
-			if (p.getAddress().compareTo(addressFirestation) == 0) {
-				phoneList.add(p.getPhone());
+		// 1) Parcours la liste de fire station
+		for (FireStation fs : fsList) {
+			// 2) Si la fs a le bon num
+			if (fs.getStation() == stationNumber) {
+				// 3) On parcours les personnes
+				for (Person p : pList) {
+					// 4) Si bonne adresse
+					if (fs.getAddress().compareTo(p.getAddress()) == 0) {
+						// 5) On ajoute le numéro de téléphone à la liste
+						phoneList.add(p.getPhone());
+					}
+				}
 			}
 		}
 
+		// 6) On élimine les doublons
+		phoneList = new ArrayList<String>(new HashSet<String>(phoneList));
 		return phoneList;
 	}
 

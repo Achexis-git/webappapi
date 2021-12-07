@@ -42,9 +42,9 @@ public class URLsController {
 	
 	// http://localhost:8080/phoneAlert?firestation=<firestation_number>
 	@GetMapping("/phoneAlert")
-	public List<String> getPhoneAlertFirestation(@RequestParam(name = "firestation") String address) {
+	public List<String> getPhoneAlertFirestation(@RequestParam(name = "firestation") int stationNumber) {
 		logger.info("Request 3 received");
-		return getService.getPhoneCloseToFirestation(address);
+		return getService.getPhoneCloseToFirestation(stationNumber);
 	}
 	
 	// http://localhost:8080/fire?address=<address>
