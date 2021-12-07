@@ -29,16 +29,16 @@ public class JsonRepository {
 
 	private static String jsonFilepath = System.getProperty("user.dir") + "/src/main/resources/data.json";
 
-	private static Persons persons               = new Persons();
-	private static FireStations fireStations     = new FireStations();
+	private static Persons persons = new Persons();
+	private static FireStations fireStations = new FireStations();
 	private static MedicalRecords medicalRecords = new MedicalRecords();
 
 	public JsonRepository() {
 
 	}
 
-	//TODO: Ajouter un booléen qui vérifie si le fichier a été changer depuis le dernier chargement (static)
-	//      et envoyer des copies d'objets pas les objets
+	// TODO: Ajouter un booléen qui vérifie si le fichier a été changer depuis le
+	// dernier chargement (static)
 	public Persons getAllPersons() {
 		// read json & update persons & fireStations & medicalRecords
 		readJsonPerson();
@@ -88,8 +88,8 @@ public class JsonRepository {
 			logger.info("Arrayed the json");
 			logger.debug("First element of the list : " + personList.get(0).toString());
 
-			//TODO: Dois y avoir moyen de faire ça de façon plus smart
-			
+			// TODO: Dois y avoir moyen de faire ça de façon plus smart
+
 			// Browse personList and add each person to persons
 			persons = new Persons(); // Reset the attribute
 			Person pers;
@@ -165,27 +165,28 @@ public class JsonRepository {
 		// Read the JSONObject and return a MedicalRecord with the right attributes
 
 		String firstName = (String) medicalRecord.get("firstName");
-		String lastName  = (String) medicalRecord.get("lastName");
+		String lastName = (String) medicalRecord.get("lastName");
 		String birthdate = (String) medicalRecord.get("birthdate");
-		
+
 		Object mObj = medicalRecord.get("medications");
 		logger.trace("Get the medication : " + mObj);
 		List<String> medication = toList((JSONArray) mObj);
 		logger.trace("Medication correctly mapped : " + medication);
-		
+
 		Object aObj = medicalRecord.get("allergies");
 		List<String> allergies = toList((JSONArray) aObj);
 
 		return new MedicalRecord(firstName, lastName, birthdate, medication, allergies);
 	}
-	
+
+	// Convert JSONArray into a list
 	private static List<String> toList(JSONArray jsonArr) {
 		List<String> list = new ArrayList<String>();
-		for(int i=0; i<jsonArr.size(); i++) {
+		for (int i = 0; i < jsonArr.size(); i++) {
 			list.add((String) jsonArr.get(i));
 			logger.trace("Ajoute élément : " + (String) jsonArr.get(i));
 		}
-		
+
 		return list;
 	}
 }

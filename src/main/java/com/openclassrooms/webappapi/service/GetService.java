@@ -230,9 +230,6 @@ public class GetService {
 		// 2.9) Ajoute le home à iFire
 		iFire.setHome(home);
 
-		// TODO: Compléter la posologie et ajouter le numéro de caserne
-		// On ajoute les médications et allergies
-
 		return iFire;
 	}
 
