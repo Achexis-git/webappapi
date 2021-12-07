@@ -66,12 +66,12 @@ public class GetService {
 								}
 								// 9) Pop le mr en cas de même nom prénom
 								mrList.remove(mr);
+								// 10) Pop p en cas de même nom prénom
+								pList.remove(i);
+								i--;
 								break;
 							}
 						}
-						// 10) Pop p en cas de même nom prénom
-						pList.remove(i);
-						i--;
 					}
 				}
 			}
@@ -120,11 +120,11 @@ public class GetService {
 						}
 						// 7) Remove le mr et break la boucle (cas même nom prénom)
 						mrList.remove(mr);
+						pList.remove(i);
+						i--; // 8) Pour équilibre avec le remove
 						break;
 					}
 				}
-				pList.remove(i);
-				i--; // 8) Pour équilibre avec le remove
 			}
 		}
 
@@ -354,14 +354,13 @@ public class GetService {
 						// 7) Prendre en compte le cas où il y a plusieurs personnes avec les même nom
 						// et prénom => on pop le mr et la personne et on sort des loop avec un break
 						mrList.remove(mr);
+						pList.remove(i);
+						i--; // Dois retirer 1 à i car le remove retire 1 au éléments suivants de la liste
 						break;
 					}
 				}
 				// 8) Ajoute le pi à la liste
 				piList.add(pi);
-				pList.remove(i);
-				i--; // Dois retirer 1 à i car le remove retire 1 au éléments suivants de la liste
-				// Pas de break pour avoir toutes les occurences avec les noms
 			}
 		}
 		return piList;
