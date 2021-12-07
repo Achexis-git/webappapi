@@ -161,21 +161,20 @@ public class GetService {
 	}
 
 	public List<String> getAllEmailCity(String city) {
-		List<Person> persons = jsonRepository.getAllPersons().getPersonList();
+		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
 
 		List<String> emails = new ArrayList<String>();
 
-		// Parcours la liste
-		// TODO: Dois changer la boucle
-		for (int i = 0; i < persons.size(); i++) {
-			// Si la city de la personne est la même que le param on ajoute son email
-			if (persons.get(i).getCity().compareTo(city) == 0) {
-				emails.add(persons.get(i).getEmail());
+		// 1) Parcours la liste
+		for (Person p : pList) {
+			// 2) Si la city de la personne est la même que le param on ajoute son email
+			if (p.getCity().compareTo(city) == 0) {
+				emails.add(p.getEmail());
 			}
 		}
 
-		// Enlève les doublons en transformant la liste en set puis re en liste
-		emails = new ArrayList<>(new HashSet<String>(emails));
+		// 3) Enlève les doublons en transformant la liste en set puis re en liste
+		emails = new ArrayList<String>(new HashSet<String>(emails));
 		return emails;
 	}
 
