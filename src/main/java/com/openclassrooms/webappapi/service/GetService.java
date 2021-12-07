@@ -22,6 +22,7 @@ import com.openclassrooms.webappapi.model.InhabitantFire;
 import com.openclassrooms.webappapi.model.MedicalRecord;
 import com.openclassrooms.webappapi.model.Person;
 import com.openclassrooms.webappapi.model.Persons;
+import com.openclassrooms.webappapi.model.PersonsAndCountdown;
 import com.openclassrooms.webappapi.repository.JsonRepository;
 
 @Service
@@ -31,37 +32,56 @@ public class GetService {
 	@Autowired
 	private JsonRepository jsonRepository;
 
-	public Persons getFirestationStationNumber(int stationNumber) {
-		List<FireStation> fireStations = jsonRepository.getAllFireStations().getFsList();
-		Persons persons = jsonRepository.getAllPersons();
+	public PersonsAndCountdown getPeoplesCloseToFireStation(int stationNumber) {
+		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
+		List<MedicalRecord> mrList = jsonRepository.getAllMedicalRecords().getMrList();
+		List<FireStation> fsList = jsonRepository.getAllFireStations().getFsList();
 
-		List<String> addresses = new ArrayList<String>();
-		// Parcours la liste des station
-		// TODO: Dois changer la boucle
-		for (int i = 0; i < fireStations.size(); i++) {
-			FireStation fs = fireStations.get(i);
+		PersonsAndCountdown pc = new PersonsAndCountdown();
+		Persons persons = new Persons();
+		int childrenCountdown = 0;
+		int adultsCountdown = 0;
 
-			// Si la station à le bon stationNumber
+		// 1) Parcours les firestations
+		for (FireStation fs : fsList) {
+			// 2) Si le station number match
 			if (fs.getStation() == stationNumber) {
-				// On ajoute l'adresse à la liste d'adresses
-				addresses.add(fs.getAddress());
+				// 3) Parcours les personnes
+				for (int i = 0; i < pList.size(); i++) { // cette boucle car doit pop les personnes
+					Person p = pList.get(i);
+					// 4) Si l'adresse match
+					if (p.getAddress().compareTo(fs.getAddress()) == 0) {
+						// 5) Ajoute la personne à la liste
+						persons.addPerson(p);
+						// 6) Parcours les medical record
+						for (MedicalRecord mr : mrList) {
+							// 7) Si nom prénom match
+							if (p.getFirstName().compareTo(mr.getFirstName()) == 0
+									& p.getLastName().compareTo(mr.getLastName()) == 0) {
+								// 8) Calcule l'âge et incrémente en fonction
+								if (computeAge(mr.getBirthdate()) > 18) {
+									adultsCountdown++;
+								} else {
+									childrenCountdown++;
+								}
+								// 9) Pop le mr en cas de même nom prénom
+								mrList.remove(mr);
+								break;
+							}
+						}
+						// 10) Pop p en cas de même nom prénom
+						pList.remove(i);
+						i--;
+					}
+				}
 			}
 		}
 
-		// On parcours la liste de personnes
-		List<Person> p = persons.getPersonList();
-		// TODO: Dois changer la boucle
-		for (int i = p.size() - 1; i >= 0; i--) {
-			// Si une personne n'est pas dans la liste d'adresses on l'enlève
-			if (!(addresses.contains(p.get(i).getAddress()))) {
-				p.remove(i);
-			}
-		}
-		persons.setPersonList(p);
+		pc.setPersons(persons);
+		pc.setAdultCountdown(adultsCountdown);
+		pc.setChildrenCountdown(childrenCountdown);
 
-		// TODO: Ajouter décompte nombre enfants et adultes
-
-		return persons;
+		return pc;
 	}
 
 	public HomeChildren getEnfantAddress(String address) {
@@ -207,7 +227,7 @@ public class GetService {
 				home.addHomeInhabitant(hi);
 			}
 		}
-		
+
 		// 2.9) Ajoute le home à iFire
 		iFire.setHome(home);
 
