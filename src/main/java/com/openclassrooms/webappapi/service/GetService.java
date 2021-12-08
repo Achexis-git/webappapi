@@ -1,9 +1,13 @@
 package com.openclassrooms.webappapi.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -299,26 +303,26 @@ public class GetService {
 	}
 
 	private int computeAge(String birthday) {
-		Calendar today = Calendar.getInstance();
-		Calendar birthdayCal = Calendar.getInstance();
-
-		logger.trace("Birthday : " + birthday);
-		String[] ls = birthday.split("/");
-		logger.trace("List of birthday date : " + ls[0] + "/" + ls[1] + "/" + ls[2]);
-
+		Calendar today = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
+		 
+		Calendar birth = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
 		try {
-			// MM/DD/YYYY
-			birthdayCal.set(Integer.parseInt(ls[2]), Integer.parseInt(ls[0]), Integer.parseInt(ls[1]));
-		} catch (NumberFormatException e) {
+			Date date = new SimpleDateFormat("MM/dd/yyyy").parse(birthday);
+			birth.setTime(date);
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 
-		double age = (double) (today.getTimeInMillis() - birthdayCal.getTimeInMillis());
-		logger.trace("L'âge est de : " + age + "ms");
-		age = age / (1000.0 * 60.0 * 60.0 * 24.0 * 365.0);
-		logger.trace("L'âge est de : " + age + "ans");
-
-		return (int) age;
+		int age = today.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
+		if (today.get(Calendar.MONTH) == today.get(Calendar.MONTH)) {
+			if (today.get(Calendar.DAY_OF_MONTH) < birth.get(Calendar.DAY_OF_MONTH)) {
+				age--;
+			}
+		} else if (today.get(Calendar.MONTH) < birth.get(Calendar.MONTH)) {
+			age--;
+		}
+		
+		return age;
 	}
 
 	public List<PersonInfo> getPersonInfo(String firstName, String lastName) {
