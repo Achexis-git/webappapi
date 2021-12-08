@@ -38,7 +38,7 @@ public class URLsController {
 	@GetMapping("/childAlert")
 	public HomeChildren getEnfantAddress(@RequestParam String address){
 		logger.info("Request 2 received");
-		return getService.getEnfantAddress(address);
+		return getService.getChildAddress(address);
 	}
 	
 	// http://localhost:8080/phoneAlert?firestation=<firestation_number>

@@ -90,7 +90,7 @@ public class GetService {
 		return pc;
 	}
 
-	public HomeChildren getEnfantAddress(String address) {
+	public HomeChildren getChildAddress(String address) {
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
 		List<MedicalRecord> mrList = jsonRepository.getAllMedicalRecords().getMrList();
 

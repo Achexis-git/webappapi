@@ -41,6 +41,8 @@ public class JsonRepository {
 	private static boolean fileChanged = true;
 	
 	private static boolean fileUnSaved = true;
+	
+	// TODO : Peut-être créer une méthode load() similaire à save() ?
 
 	public JsonRepository() {
 
