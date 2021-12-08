@@ -27,6 +27,8 @@ import com.openclassrooms.webappapi.repository.JsonRepository;
 
 @Service
 public class GetService {
+
+	// TODO : Potentiel problèmes si persons et medical records pas en accord entre eux
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
 	@Autowired
