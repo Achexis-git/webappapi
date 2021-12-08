@@ -2,6 +2,7 @@ package com.openclassrooms.webappapi.repository;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class JsonRepository {
 	public Persons getAllPersons() {
 		// read json & update persons & fireStations & medicalRecords
 		if (fileChanged) {
-			readJsonPerson();
+			readJson();
 			fileChanged = false;
 		}
 		Persons p = new Persons();
@@ -57,7 +58,7 @@ public class JsonRepository {
 	public FireStations getAllFireStations() {
 		// read json & update persons & fireStations & medicalRecords
 		if (fileChanged) {
-			readJsonPerson();
+			readJson();
 			fileChanged = false;
 		}
 		FireStations fs = new FireStations();
@@ -68,7 +69,7 @@ public class JsonRepository {
 	public MedicalRecords getAllMedicalRecords() {
 		// read json & update persons & fireStations & medicalRecords
 		if (fileChanged) {
-			readJsonPerson();
+			readJson();
 			fileChanged = false;
 		}
 		MedicalRecords mr = new MedicalRecords();
@@ -77,7 +78,7 @@ public class JsonRepository {
 	}
 
 	// @SuppressWarnings("unchecked")
-	private void readJsonPerson() {
+	private void readJson() {
 		JSONParser jsonParser = new JSONParser();
 
 		try (FileReader reader = new FileReader(jsonFilepath)) {
@@ -201,5 +202,121 @@ public class JsonRepository {
 		}
 
 		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void writeJson() {
+		readJson();
+
+		// First Employee
+		JSONObject employeeDetails = new JSONObject();
+		employeeDetails.put("firstName", "Lokesh");
+		employeeDetails.put("lastName", "Gupta");
+		employeeDetails.put("website", "howtodoinjava.com");
+
+		// 1) Crée l'objet que je vais enregistrer
+		JSONObject jsonObj = new JSONObject();
+
+		// 2.1) Crée son attribut "persons"
+		JSONArray personJsonArr = createPersonJsonArr();
+		// 2.2) Crée son attribut "firestations"
+		JSONArray firestationJsonArr = createFirestationJsonArr();
+		// 2.3) Crée son attribut "medicalrecords"
+		JSONArray medicalrecordJsonArr = createMedicalRecordJsonArr();
+
+		jsonObj.put("persons", personJsonArr);
+		jsonObj.put("firestations", firestationJsonArr);
+		jsonObj.put("medicalrecords", medicalrecordJsonArr);
+
+		// Write JSON file
+		try (FileWriter file = new FileWriter(
+				System.getProperty("user.dir") + "/src/main/resources/dataTestWrite.json")) {
+			// We can write any JSONArray or JSONObject instance to the file
+			logger.info("Writing file");
+			file.write(jsonObj.toJSONString().replace("\\", "")); // Remove the backslashes (appears in birthdate slashes)
+			file.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private JSONArray createPersonJsonArr() {
+		List<Person> pList = persons.getPersonList();
+
+		JSONArray personJsonArr = new JSONArray();
+
+		// 1) Parcours la liste de person
+		for (Person p : pList) {
+			// 2) Crée un JSONObject
+			JSONObject pJson = new JSONObject();
+			// 3) Mets chacun des élément de la person dans le JSONObject
+			pJson.put("firstName", p.getFirstName());
+			pJson.put("lastName", p.getLastName());
+			pJson.put("address", p.getAddress());
+			pJson.put("city", p.getCity());
+			pJson.put("zip", p.getZip());
+			pJson.put("phone", p.getPhone());
+			pJson.put("email", p.getEmail());
+			// 4) Ajoute le JSONObject à la liste
+			personJsonArr.add(pJson);
+		}
+
+		return personJsonArr;
+	}
+
+	@SuppressWarnings("unchecked")
+	private JSONArray createFirestationJsonArr() {
+		List<FireStation> fsList = fireStations.getFsList();
+
+		JSONArray firestationJsonArr = new JSONArray();
+
+		// 1) Parcours la liste de firestation
+		for (FireStation fs : fsList) {
+			// 2) Crée un JSONObject
+			JSONObject fsJson = new JSONObject();
+			// 3) Mets chacun des élément de la firestation dans le JSONObject
+			fsJson.put("address", fs.getAddress());
+			fsJson.put("station", Integer.toString(fs.getStation()));
+			// 4) Ajoute le JSONObject à la liste
+			firestationJsonArr.add(fsJson);
+		}
+
+		return firestationJsonArr;
+	}
+
+	@SuppressWarnings("unchecked")
+	private JSONArray createMedicalRecordJsonArr() {
+		JSONParser jsonParser = new JSONParser();
+		List<MedicalRecord> mrList = medicalRecords.getMrList();
+		
+		JSONArray medicalRecordJsonArr = new JSONArray();
+		
+		// 1) Parcours les medical record
+		for (MedicalRecord mr : mrList) {
+			// 2) Crée un JSONObject
+			JSONObject mrJson = new JSONObject();
+			// 3.1) Mets chacun des élément du medical record dans le JSONObject
+			mrJson.put("firstName", mr.getFirstName());
+			mrJson.put("lastName", mr.getLastName());
+			mrJson.put("birthdate", mr.getBirthdate());
+			logger.trace("Birthdate : " + mrJson.get("birthdate"));
+			// 3.2) Parcours les medications
+			JSONArray med = new JSONArray();
+			for (String m : mr.getMedication()) {
+				med.add(m);
+			}
+			// 3.3) Parcours les allergies
+			JSONArray al = new JSONArray();
+			for (String a : mr.getAllergies()) {
+				al.add(a);
+			}
+			mrJson.put("medications", med);
+			mrJson.put("allergies", al);
+			
+			medicalRecordJsonArr.add(mrJson);
+		}
+		
+		return medicalRecordJsonArr;
 	}
 }

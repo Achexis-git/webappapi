@@ -48,6 +48,7 @@ public class PersonController {
 	@DeleteMapping(path = "/person", consumes = "application/json", produces = "application/json")
 	public String deletePerson(@RequestBody Person person) {
 		logger.info("Deleted person : {} {}", person.getFirstName(), person.getLastName());
+		jsonRepository.writeJson();
 		return "ok";
 	}
 }
