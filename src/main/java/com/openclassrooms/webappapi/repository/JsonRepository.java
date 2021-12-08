@@ -39,6 +39,8 @@ public class JsonRepository {
 	// Read the file => turn false
 	// Prevent multiple reading
 	private static boolean fileChanged = true;
+	
+	private static boolean fileUnSaved = true;
 
 	public JsonRepository() {
 
@@ -75,6 +77,25 @@ public class JsonRepository {
 		MedicalRecords mr = new MedicalRecords();
 		mr.setMrList(medicalRecords.getMrList());
 		return mr;
+	}
+	
+	public void setPersons(Persons persons) {
+		Persons p = new Persons();
+		p.setPersonList(persons.getPersonList());
+		JsonRepository.persons = p;
+		
+		fileUnSaved = true;
+	}
+	
+	public void save() {
+		if (fileUnSaved) {
+			writeJson();
+			fileUnSaved = false;
+			logger.info("File saved");
+		} 
+		else {
+			logger.info("File already saved");
+		}
 	}
 
 	// @SuppressWarnings("unchecked")
@@ -205,14 +226,7 @@ public class JsonRepository {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void writeJson() {
-		readJson();
-
-		// First Employee
-		JSONObject employeeDetails = new JSONObject();
-		employeeDetails.put("firstName", "Lokesh");
-		employeeDetails.put("lastName", "Gupta");
-		employeeDetails.put("website", "howtodoinjava.com");
+	private void writeJson() {
 
 		// 1) Crée l'objet que je vais enregistrer
 		JSONObject jsonObj = new JSONObject();
