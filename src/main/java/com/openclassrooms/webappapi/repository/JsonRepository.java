@@ -1,11 +1,14 @@
 package com.openclassrooms.webappapi.repository;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +18,11 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Repository;
 
+import com.jsoniter.JsonIterator;
+import com.jsoniter.any.Any;
+import com.jsoniter.output.JsonStream;
 import com.openclassrooms.webappapi.WebappapiApplication;
+import com.openclassrooms.webappapi.model.File;
 import com.openclassrooms.webappapi.model.FireStation;
 import com.openclassrooms.webappapi.model.FireStations;
 import com.openclassrooms.webappapi.model.MedicalRecord;
@@ -29,6 +36,7 @@ public class JsonRepository {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
 	private static String jsonFilepath = System.getProperty("user.dir") + "/src/main/resources/data.json";
+	private static String jsonFilepathWrite = System.getProperty("user.dir") + "/src/main/resources/dataTestWrite.json";
 
 	private static Persons persons = new Persons();
 	private static FireStations fireStations = new FireStations();
@@ -49,33 +57,18 @@ public class JsonRepository {
 	}
 
 	public Persons getAllPersons() {
-		// read json & update persons & fireStations & medicalRecords
-		if (fileChanged) {
-			readJson();
-			fileChanged = false;
-		}
 		Persons p = new Persons();
 		p.setPersonList(persons.getPersonList());
 		return p;
 	}
 
 	public FireStations getAllFireStations() {
-		// read json & update persons & fireStations & medicalRecords
-		if (fileChanged) {
-			readJson();
-			fileChanged = false;
-		}
 		FireStations fs = new FireStations();
 		fs.setFsList(fireStations.getFsList());
 		return fs;
 	}
 
 	public MedicalRecords getAllMedicalRecords() {
-		// read json & update persons & fireStations & medicalRecords
-		if (fileChanged) {
-			readJson();
-			fileChanged = false;
-		}
 		MedicalRecords mr = new MedicalRecords();
 		mr.setMrList(medicalRecords.getMrList());
 		return mr;
@@ -99,18 +92,54 @@ public class JsonRepository {
 			logger.info("File already saved");
 		}
 	}
+	
+	public void load() {
+		if (fileChanged) {
+			readJson();
+			fileChanged = false;
+			logger.info("File loaded");
+		}
+		else {
+			logger.info("File already loaded");
+		}
+		if (fileUnSaved) {
+			logger.warn("Overwrite unsaved changes");
+		}
+	}
 
 	// @SuppressWarnings("unchecked")
 	private void readJson() {
 		JSONParser jsonParser = new JSONParser();
 
-		try (FileReader reader = new FileReader(jsonFilepath)) {
+		try (BufferedReader reader = new BufferedReader(new FileReader(jsonFilepath))) {
 			// Read data.json file
 			logger.info("Open data.json file");
-
+			String stringFile = "";
+			String line = reader.readLine();
+			while (line != null) {
+				stringFile += line;
+				logger.trace(line);
+				line = reader.readLine();
+			}
+			// stringFile = stringFile.replace(" ", "");
+			//stringFile = stringFile.replace("\"", "\\\"").replace(" ", "");
+			logger.info(stringFile);
+			File file = JsonIterator.deserialize(stringFile, File.class);
+			logger.info("Serialization réussie");
+			/*Map<String, Any> m = file.asMap();
+			for (Any v : m.values()) {
+				logger.info(v.toString());
+			}*/
+			
+			persons.setPersonList(file.getPersons());
+			fireStations.setFsList(file.getFirestations());
+			medicalRecords.setMrList(file.getMedicalrecords());
+			/*
 			// Parse content of the file into an object
 			Object obj = jsonParser.parse(reader);
 			logger.info("File parsed into obj");
+			
+			// Any f = JsonIterator.deserialize(obj.toString());
 
 			// Cast the Object into JSONObject
 			JSONObject objJson = (JSONObject) obj;
@@ -121,6 +150,9 @@ public class JsonRepository {
 			JSONArray fireStationList = (JSONArray) objJson.get("firestations");
 			// Get "persons" of the JSONObject and put it into an array
 			JSONArray medicalRecordList = (JSONArray) objJson.get("medicalrecords");
+			persons = JsonIterator.deserialize(personList.toString());
+			
+
 
 			logger.info("Arrayed the json");
 			logger.debug("First element of the list : " + personList.get(0).toString());
@@ -163,18 +195,19 @@ public class JsonRepository {
 				logger.trace("Cast the medical record");
 				medicalRecords.addMedicalRecord(mr);
 				logger.trace("Add the medical record"); //
-			}
+			}*/
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
+		//} catch (ParseException e) {
+			//e.printStackTrace();
 		}
 		logger.info("All correctly loaded");
 	}
 
+	/*
 	private static Person parsePersonObject(JSONObject person, int id) {
 		// Read the JSONObject and return a Person with the right attributes
 
@@ -225,11 +258,12 @@ public class JsonRepository {
 		}
 
 		return list;
-	}
+	}*/
 
 	@SuppressWarnings("unchecked")
 	private void writeJson() {
 
+		/*
 		// 1) Crée l'objet que je vais enregistrer
 		JSONObject jsonObj = new JSONObject();
 
@@ -243,19 +277,28 @@ public class JsonRepository {
 		jsonObj.put("persons", personJsonArr);
 		jsonObj.put("firestations", firestationJsonArr);
 		jsonObj.put("medicalrecords", medicalrecordJsonArr);
-
+*/
+		
+		File file = new File();
+		file.setPersons(persons.getPersonList());
+		file.setFirestations(fireStations.getFsList());
+		file.setMedicalrecords(medicalRecords.getMrList());
+		
+		String stringToSave = JsonStream.serialize(file);
+		
 		// Write JSON file
-		try (FileWriter file = new FileWriter(
-				System.getProperty("user.dir") + "/src/main/resources/dataTestWrite.json")) {
+		try (FileWriter writer = new FileWriter(jsonFilepathWrite)) {
 			// We can write any JSONArray or JSONObject instance to the file
 			logger.info("Writing file");
-			file.write(jsonObj.toJSONString().replace("\\", "")); // Remove the backslashes (appears in birthdate slashes)
-			file.flush();
+			// file.write(jsonObj.toJSONString().replace("\\", "")); // Remove the backslashes (appears in birthdate slashes)
+			// file.flush();
+			writer.write(stringToSave);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/*
 	@SuppressWarnings("unchecked")
 	private JSONArray createPersonJsonArr() {
 		List<Person> pList = persons.getPersonList();
@@ -319,7 +362,7 @@ public class JsonRepository {
 			logger.trace("Birthdate : " + mrJson.get("birthdate"));
 			// 3.2) Parcours les medications
 			JSONArray med = new JSONArray();
-			for (String m : mr.getMedication()) {
+			for (String m : mr.getMedications()) {
 				med.add(m);
 			}
 			// 3.3) Parcours les allergies
@@ -334,5 +377,5 @@ public class JsonRepository {
 		}
 		
 		return medicalRecordJsonArr;
-	}
+	}*/
 }

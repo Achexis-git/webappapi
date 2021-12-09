@@ -1,11 +1,15 @@
 package com.openclassrooms.webappapi.model;
 
+import com.jsoniter.annotation.JsonProperty;
+import com.jsoniter.fuzzy.MaybeStringIntDecoder;
+
 import lombok.Data;
 
 @Data
 public class FireStation {
 	
 	private String address;
+	@JsonProperty(decoder = MaybeStringIntDecoder.class)
 	private int station;
 	
 	public FireStation() {

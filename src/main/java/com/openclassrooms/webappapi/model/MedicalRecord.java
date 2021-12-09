@@ -1,27 +1,24 @@
 package com.openclassrooms.webappapi.model;
 
 import java.util.List;
-import java.util.Map;
-
-import lombok.Data;
 
 public class MedicalRecord {
 	
 	private String firstName;
 	private String lastName;
 	private String birthdate;
-	private List<String> medication;
+	private List<String> medications;
 	private List<String> allergies;
 	
 	public MedicalRecord() {
 		
 	}
 	
-	public MedicalRecord(String firstName, String lastName, String birthdate, List<String> medication, List<String> allergies) {
+	public MedicalRecord(String firstName, String lastName, String birthdate, List<String> medications, List<String> allergies) {
 		this.firstName  = firstName;
 		this.lastName   = lastName;
 		this.birthdate  = birthdate;
-		this.medication = medication;
+		this.medications = medications;
 		this.allergies  = allergies;
 	}
 
@@ -37,8 +34,8 @@ public class MedicalRecord {
 		this.birthdate = birthdate;
 	}
 	
-	public void setMedication(List<String> medication) {
-		this.medication = medication;
+	public void setMedication(List<String> medications) {
+		this.medications = medications;
 	}
 	
 	public void setAllergies(List<String> allergies) {
@@ -57,8 +54,8 @@ public class MedicalRecord {
 		return birthdate;
 	}
 	
-	public List<String> getMedication() {
-		return medication;
+	public List<String> getMedications() {
+		return medications;
 	}
 	
 	public List<String> getAllergies() {

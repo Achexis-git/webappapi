@@ -1,9 +1,12 @@
 package com.openclassrooms.webappapi.model;
 
+import com.jsoniter.annotation.JsonProperty;
+
 import lombok.Data;
 
 public class Person {
 
+	@JsonProperty(required = false)
 	private int id;
 	private String firstName;
 	private String lastName;

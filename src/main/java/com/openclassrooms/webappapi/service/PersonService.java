@@ -20,6 +20,7 @@ public class PersonService {
 	private JsonRepository jsonRepository;
 	
 	public Person postPerson (Person person) {
+		jsonRepository.load();
 		Persons persons = jsonRepository.getAllPersons();
 		List<Person> pList = persons.getPersonList();
 		
@@ -33,6 +34,7 @@ public class PersonService {
 	}
 	
 	public Person putPerson(Person person) {
+		jsonRepository.load();
 		Persons persons = jsonRepository.getAllPersons();
 		List<Person> pList = persons.getPersonList();
 		
@@ -64,6 +66,7 @@ public class PersonService {
 	}
 	
 	public Person deletePerson(String firstName, String lastName) {
+		jsonRepository.load();
 		Persons persons = jsonRepository.getAllPersons();
 		List<Person> pList = persons.getPersonList();
 		

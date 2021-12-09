@@ -39,6 +39,7 @@ public class GetService {
 	private JsonRepository jsonRepository;
 
 	public PersonsAndCountdown getPeoplesCloseToFireStation(int stationNumber) {
+		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
 		List<MedicalRecord> mrList = jsonRepository.getAllMedicalRecords().getMrList();
 		List<FireStation> fsList = jsonRepository.getAllFireStations().getFsList();
@@ -91,6 +92,7 @@ public class GetService {
 	}
 
 	public HomeChildren getChildAddress(String address) {
+		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
 		List<MedicalRecord> mrList = jsonRepository.getAllMedicalRecords().getMrList();
 
@@ -141,6 +143,7 @@ public class GetService {
 	}
 
 	public List<String> getPhoneCloseToFirestation(int stationNumber) {
+		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
 		List<FireStation> fsList = jsonRepository.getAllFireStations().getFsList();
 
@@ -167,6 +170,7 @@ public class GetService {
 	}
 
 	public List<String> getAllEmailCity(String city) {
+		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
 
 		List<String> emails = new ArrayList<String>();
@@ -185,6 +189,7 @@ public class GetService {
 	}
 
 	public InhabitantFire getPosologieCloseToFirestation(String address) {
+		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
 		List<MedicalRecord> mrList = jsonRepository.getAllMedicalRecords().getMrList();
 		List<FireStation> fsList = jsonRepository.getAllFireStations().getFsList();
@@ -220,7 +225,7 @@ public class GetService {
 					if (mr.getFirstName().compareTo(p.getFirstName()) == 0
 							& mr.getLastName().compareTo(p.getLastName()) == 0) {
 						// 2.6) Ajoute le mr
-						hi.setMedication(mr.getMedication());
+						hi.setMedication(mr.getMedications());
 						hi.setAllergies(mr.getAllergies());
 						hi.setAge(computeAge(mr.getBirthdate()));
 						// 2.7) Remove mr dans le cas de même nom prénom et break
@@ -240,6 +245,7 @@ public class GetService {
 	}
 
 	public List<Home> getHomesCloseToStations(List<Integer> stations) {
+		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
 		List<MedicalRecord> mrList = jsonRepository.getAllMedicalRecords().getMrList();
 		List<FireStation> fsList = jsonRepository.getAllFireStations().getFsList();
@@ -280,7 +286,7 @@ public class GetService {
 							if (mr.getFirstName().compareTo(hi.getFirstName()) == 0
 									& mr.getLastName().compareTo(hi.getLastName()) == 0) {
 								// 9) On ajoute le MR à hi
-								hi.setMedication(mr.getMedication());
+								hi.setMedication(mr.getMedications());
 								hi.setAllergies(mr.getAllergies());
 								// Calcule age
 								hi.setAge(computeAge(mr.getBirthdate()));
@@ -326,6 +332,7 @@ public class GetService {
 	}
 
 	public List<PersonInfo> getPersonInfo(String firstName, String lastName) {
+		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
 		List<MedicalRecord> mrList = jsonRepository.getAllMedicalRecords().getMrList();
 
@@ -351,7 +358,7 @@ public class GetService {
 					if (mr.getFirstName().compareTo(firstName) == 0 & mr.getLastName().compareTo(lastName) == 0) {
 						logger.debug("Got a medical record with the right name");
 						// 6) On ajoute les valeurs au personal info
-						pi.setMedication(mr.getMedication());
+						pi.setMedication(mr.getMedications());
 						pi.setAllergies(mr.getAllergies());
 						pi.setAge(computeAge(mr.getBirthdate()));
 						// 7) Prendre en compte le cas où il y a plusieurs personnes avec les même nom

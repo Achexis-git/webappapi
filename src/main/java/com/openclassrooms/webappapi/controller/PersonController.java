@@ -25,11 +25,15 @@ public class PersonController {
 
 	@Autowired
 	private PersonService personService;
+	
+	@Autowired
+	private JsonRepository jsonRepository;
 
-	/*
-	 * @GetMapping(path="/", produces="application/json") public Persons
-	 * getPersons() { return jsonRepository.getAllPersons(); }
-	 */
+	@GetMapping(path = "/person/", produces = "application/json")
+	public Persons getPersons() {
+		logger.info("Get persons");
+		return jsonRepository.getAllPersons();
+	}
 
 	// Body example : { "id":0, "firstName":"Winston", "lastName":"Churchill,
 	// "address":"951 LoneTree Rd", "city":"Culver", "zip":"97451",
