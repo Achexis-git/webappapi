@@ -76,6 +76,14 @@ public class JsonRepository {
 		fileUnSaved = true;
 	}
 
+	public void setMedicalRecords(MedicalRecords medicalRecords) {
+		MedicalRecords mr = new MedicalRecords();
+		mr.setMrList(medicalRecords.getMrList());
+		JsonRepository.medicalRecords = mr;
+
+		fileUnSaved = true;
+	}
+
 	public void save() {
 		if (fileUnSaved) {
 			writeJson();

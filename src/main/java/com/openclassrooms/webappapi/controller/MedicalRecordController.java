@@ -1,24 +1,45 @@
 package com.openclassrooms.webappapi.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.webappapi.WebappapiApplication;
+import com.openclassrooms.webappapi.model.MedicalRecord;
 import com.openclassrooms.webappapi.model.MedicalRecords;
-import com.openclassrooms.webappapi.repository.JsonRepository;
+import com.openclassrooms.webappapi.service.MedicalRecordService;
 
 @RestController
-@RequestMapping(path = "/medicalrecord")
 public class MedicalRecordController {
+	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
 	@Autowired
-	private JsonRepository jsonRepository;
+	MedicalRecordService mrService;
 
-	@GetMapping(path = "/", produces = "application/json")
-	public MedicalRecords getMedicalRecords() {
-		MedicalRecords mr = jsonRepository.getAllMedicalRecords();
-		return mr;
+	@PostMapping(path = "/medicalrecord", consumes = "application/json", produces = "application/json")
+	public MedicalRecord postMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+		return mrService.createMedicalRecord(medicalRecord);
 	}
 
+	@GetMapping(path = "/medicalrecord", produces = "application/json")
+	public MedicalRecords getMedicalRecords() {
+		logger.info("Getting medical records");
+		return mrService.readMedicalRecords();
+	}
+
+	@PutMapping(path = "/medicalrecord", consumes = "application/json", produces = "application/json")
+	public MedicalRecord putMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+		return mrService.updateMedicalRecord(medicalRecord);
+	}
+
+	@DeleteMapping(path = "/medicalrecord", consumes = "application/json", produces = "application/json")
+	public MedicalRecord deleteMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+		return mrService.deleteMedicalRecord(medicalRecord);
+	}
 }
