@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Repository;
 
 import com.jsoniter.JsonIterator;
@@ -36,9 +35,8 @@ public class JsonRepository {
 	// Read the file => turn false
 	// Prevent multiple reading, the file is only read one time by execution
 	private static boolean fileChanged = true;
-	
-	private static boolean fileUnSaved = true;
 
+	private static boolean fileUnSaved = false;
 
 	public JsonRepository() {
 
@@ -61,33 +59,39 @@ public class JsonRepository {
 		mr.setMrList(medicalRecords.getMrList());
 		return mr;
 	}
-	
+
 	public void setPersons(Persons persons) {
 		Persons p = new Persons();
 		p.setPersonList(persons.getPersonList());
 		JsonRepository.persons = p;
-		
+
 		fileUnSaved = true;
 	}
-	
+
+	public void setFirestations(FireStations firestations) {
+		FireStations fs = new FireStations();
+		fs.setFsList(firestations.getFsList());
+		JsonRepository.fireStations = fs;
+
+		fileUnSaved = true;
+	}
+
 	public void save() {
 		if (fileUnSaved) {
 			writeJson();
 			fileUnSaved = false;
 			logger.info("File saved");
-		} 
-		else {
+		} else {
 			logger.info("File already saved");
 		}
 	}
-	
+
 	public void load() {
 		if (fileChanged) {
 			readJson();
 			fileChanged = false;
 			logger.info("File loaded");
-		}
-		else {
+		} else {
 			logger.info("File already loaded");
 		}
 		if (fileUnSaved) {
@@ -99,7 +103,7 @@ public class JsonRepository {
 		// 1) Open the file
 		try (BufferedReader reader = new BufferedReader(new FileReader(jsonFilepathRead))) {
 			logger.info("Open data.json file");
-			
+
 			// 2) Copy the content of the file into one string
 			String stringFile = "";
 			String line = reader.readLine();
@@ -108,16 +112,16 @@ public class JsonRepository {
 				logger.trace(line);
 				line = reader.readLine();
 			}
-			
+
 			// 3) Deserialize the string into an object File
 			File file = JsonIterator.deserialize(stringFile, File.class);
 			logger.debug("Deserialization succeeded");
-			
+
 			// 4) Set the static objects
 			persons.setPersonList(file.getPersons());
 			fireStations.setFsList(file.getFirestations());
 			medicalRecords.setMrList(file.getMedicalrecords());
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -133,10 +137,10 @@ public class JsonRepository {
 		file.setPersons(persons.getPersonList());
 		file.setFirestations(fireStations.getFsList());
 		file.setMedicalrecords(medicalRecords.getMrList());
-		
+
 		// 3) Serialize the object to get a string
 		String stringToSave = JsonStream.serialize(file);
-		
+
 		// 4) Open JSON file
 		try (FileWriter writer = new FileWriter(jsonFilepathWrite)) {
 			// 5) Write the string into the file
