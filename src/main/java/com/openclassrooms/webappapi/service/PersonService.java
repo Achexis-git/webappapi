@@ -19,51 +19,48 @@ public class PersonService {
 	@Autowired
 	private JsonRepository jsonRepository;
 
-	public Person postPerson(Person person) {
+	public Person postPerson(Person newPerson) {
 		jsonRepository.load();
 		Persons persons = jsonRepository.getAllPersons();
-		List<Person> pList = persons.getPersonList();
 
-		pList.add(person);
-		persons.setPersonList(pList);
+		persons.addPerson(newPerson);
+		logger.info("Posted person : {} {}", newPerson.getFirstName(), newPerson.getLastName());
 
 		jsonRepository.setPersons(persons);
 		jsonRepository.save();
 
-		return person;
+		return newPerson;
 	}
 
-	public Person putPerson(Person person) {
+	public Persons readPersons() {
+		jsonRepository.load();
+		return jsonRepository.getAllPersons();
+	}
+
+	public Person putPerson(Person newPerson) {
 		jsonRepository.load();
 		Persons persons = jsonRepository.getAllPersons();
 		List<Person> pList = persons.getPersonList();
-
-		Person updatedPerson = new Person();
-		int j = 0;
 
 		// 1) Parcours la liste
 		for (int i = 0; i < pList.size(); i++) {
 			Person p = pList.get(i);
 			// 2) Si même nom prénom
-			if (p.getFirstName().compareTo(person.getFirstName()) == 0
-					& p.getLastName().compareTo(person.getLastName()) == 0) {
+			if (p.getFirstName().compareTo(newPerson.getFirstName()) == 0
+					& p.getLastName().compareTo(newPerson.getLastName()) == 0) {
 				// 3) Take list index
-				j = i;
+				persons.setPersonIndex(i, newPerson);
+				logger.info("Updated person : {} {}", newPerson.getFirstName(), newPerson.getLastName());
 				break;
 			}
 		}
-		// 4) Replace the person
-		pList.set(j, person);
-		updatedPerson = pList.get(j);
 
-		// 6) Set l'objet persons
-		persons.setPersonList(pList);
-		// 7) Set le jsonRepository
+		// 4) Set le jsonRepository
 		jsonRepository.setPersons(persons);
-		// 8) Save les changements dans le fichier
+		// 5) Save les changements dans le fichier
 		jsonRepository.save();
 
-		return updatedPerson;
+		return newPerson;
 	}
 
 	public Person deletePerson(String firstName, String lastName) {
@@ -74,21 +71,21 @@ public class PersonService {
 		Person deletedPerson = new Person();
 
 		// 1) Parcours la liste
-		for (Person p : pList) {
+		for (int i = 0; i < pList.size(); i++) {
+			Person p = pList.get(i);
 			// 2) Si même nom prénom
 			if (p.getFirstName().compareTo(firstName) == 0 & p.getLastName().compareTo(lastName) == 0) {
 				// 3) Delete la personne
-				pList.remove(p);
-				deletedPerson = p;
+				persons.removePersonIndex(i);
+				logger.info("Deleted person : {} {}", firstName, lastName);
+				deletedPerson = pList.get(i);
 				break;
 			}
 		}
 
-		// 4) Set l'object persons
-		persons.setPersonList(pList);
-		// 5) Set le jsonRepository
+		// 4) Set le jsonRepository
 		jsonRepository.setPersons(persons);
-		// 6) Save les changements dans le fichier
+		// 5) Save les changements dans le fichier
 		jsonRepository.save();
 
 		return deletedPerson;
