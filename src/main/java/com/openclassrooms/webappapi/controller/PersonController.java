@@ -29,7 +29,7 @@ public class PersonController {
 	@Autowired
 	private JsonRepository jsonRepository;
 
-	@GetMapping(path = "/person/", produces = "application/json")
+	@GetMapping(path = "/person", produces = "application/json")
 	public Persons getPersons() {
 		logger.info("Get persons");
 		return jsonRepository.getAllPersons();

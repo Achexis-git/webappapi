@@ -1,12 +1,10 @@
 package com.openclassrooms.webappapi.model;
 
-import com.jsoniter.annotation.JsonProperty;
-
-import lombok.Data;
+import com.jsoniter.annotation.JsonIgnore;
 
 public class Person {
 
-	@JsonProperty(required = false)
+	@JsonIgnore
 	private int id;
 	private String firstName;
 	private String lastName;
@@ -23,14 +21,14 @@ public class Person {
 	public Person(int id, String firstName, String lastName, String address, String city, String zip, String phone,
 			String email) {
 		super();
-		this.id        = id;
+		this.id = id;
 		this.firstName = firstName;
-		this.lastName  = lastName;
-		this.address   = address;
-		this.city      = city;
-		this.zip       = zip;
-		this.phone     = phone;
-		this.email     = email;
+		this.lastName = lastName;
+		this.address = address;
+		this.city = city;
+		this.zip = zip;
+		this.phone = phone;
+		this.email = email;
 	}
 
 	public void setId(int id) {
