@@ -7,7 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WebappapiApplication implements CommandLineRunner{
+public class WebappapiApplication implements CommandLineRunner {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
 	public static void main(String[] args) {
@@ -18,7 +18,7 @@ public class WebappapiApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("Hello World !");
-		
+
 	}
 
 }

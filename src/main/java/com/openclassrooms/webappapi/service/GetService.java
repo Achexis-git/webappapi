@@ -32,7 +32,8 @@ import com.openclassrooms.webappapi.repository.JsonRepository;
 @Service
 public class GetService {
 
-	// TODO : Potentiel problèmes si persons et medical records pas en accord entre eux
+	// TODO : Potentiel problèmes si persons et medical records pas en accord entre
+	// eux
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
 	@Autowired
@@ -310,7 +311,7 @@ public class GetService {
 
 	private int computeAge(String birthday) {
 		Calendar today = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
-		 
+
 		Calendar birth = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
 		try {
 			Date date = new SimpleDateFormat("MM/dd/yyyy").parse(birthday);
@@ -327,7 +328,7 @@ public class GetService {
 		} else if (today.get(Calendar.MONTH) < birth.get(Calendar.MONTH)) {
 			age--;
 		}
-		
+
 		return age;
 	}
 

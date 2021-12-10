@@ -17,7 +17,7 @@ public class InhabitantFire {
 	public int getStationNumber() {
 		return stationNumber;
 	}
-	
+
 	public Home getHome() {
 		Home h = new Home();
 		h.setAddress(home.getAddress());

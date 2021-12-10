@@ -3,7 +3,6 @@ package com.openclassrooms.webappapi.model;
 import java.util.ArrayList;
 import java.util.List;
 
-// Très similaire à PersonPosologie
 public class HomeInhabitant {
 	private String firstName;
 	private String lastName;
@@ -11,7 +10,7 @@ public class HomeInhabitant {
 	private int age;
 	private List<String> medication;
 	private List<String> allergies;
-	
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -23,15 +22,15 @@ public class HomeInhabitant {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+
 	public void setAge(int age) {
 		this.age = age;
 	}
-	
+
 	public void setMedication(List<String> medication) {
 		this.medication = medication;
 	}
-	
+
 	public void setAllergies(List<String> allergies) {
 		this.allergies = allergies;
 	}
@@ -47,15 +46,15 @@ public class HomeInhabitant {
 	public String getPhone() {
 		return phone;
 	}
-	
+
 	public int getAge() {
 		return age;
 	}
-	
+
 	public List<String> getMedication() {
 		return new ArrayList<String>(medication);
 	}
-	
+
 	public List<String> getAllergies() {
 		return new ArrayList<String>(allergies);
 	}

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.webappapi.WebappapiApplication;
 import com.openclassrooms.webappapi.model.FireStation;
 import com.openclassrooms.webappapi.model.FireStations;
-import com.openclassrooms.webappapi.repository.JsonRepository;
 import com.openclassrooms.webappapi.service.FirestationService;
 
 @RestController
