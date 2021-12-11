@@ -41,7 +41,7 @@ public class FirestationService {
 		jsonRepository.load();
 		FireStations firestations = jsonRepository.getAllFireStations();
 		List<FireStation> fsList = firestations.getFsList();
-		
+
 		FireStation updatedFirestation = new FireStation();
 
 		// Browse firestations
@@ -51,9 +51,9 @@ public class FirestationService {
 			if (fs.getAddress().compareTo(newFirestation.getAddress()) == 0) {
 				// Update firestation
 				firestations.setFsIndex(i, newFirestation);
-				logger.info("Updated firestation : {} at address {}", newFirestation.getStation(),
-						newFirestation.getAddress());
 				updatedFirestation = firestations.getFsList().get(i);
+				logger.info("Updated firestation : {} at address {}", updatedFirestation.getStation(),
+						updatedFirestation.getAddress());
 				break;
 			}
 		}
@@ -68,7 +68,7 @@ public class FirestationService {
 		jsonRepository.load();
 		FireStations firestations = jsonRepository.getAllFireStations();
 		List<FireStation> fsList = firestations.getFsList();
-		
+
 		FireStation deletedFirestation = new FireStation();
 
 		// 1) Browse firestations

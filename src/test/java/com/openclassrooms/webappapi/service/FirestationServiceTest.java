@@ -32,16 +32,16 @@ public class FirestationServiceTest {
 		mockFirestations.addFireStation(mockFs);
 		Mockito.when(jsonRepository.getAllFireStations()).thenReturn(mockFirestations);
 	}
-	
+
 	@Test
 	public void firestationPostTest() {
 		// Station to be added
 		FireStation postFs = new FireStation();
 		postFs.setAddress("Rue de l'église");
 		postFs.setStation(2);
-		
+
 		FireStation fs = fsService.createFirestation(postFs);
-		
+
 		// Vérifie que la station ajoutée est la bonne
 		assertThat(fs.getAddress()).isEqualTo("Rue de l'église");
 		assertThat(fs.getStation()).isEqualTo(2);
@@ -58,14 +58,29 @@ public class FirestationServiceTest {
 		assertThat(firestations.getFsList().get(0).getStation()).isEqualTo(1);
 	}
 
-	// TODO: Compléter les autres tests
+	@Test
+	public void firestationPutTest() {
+		// Station to be updated
+		FireStation putFs = new FireStation();
+		putFs.setAddress("Rue de la loi");
+		putFs.setStation(2);
 
+		FireStation fs = fsService.updateFirestation(putFs);
+
+		// Vérifie que la station ajoutée est la bonne
+		assertThat(fs.getAddress()).isEqualTo("Rue de la loi");
+		assertThat(fs.getStation()).isEqualTo(2);
+	}
+
+	@Test
+	public void firestationDeleteTest() {
+		FireStation deleteFs = new FireStation();
+		deleteFs.setAddress("Rue de la loi");
+		deleteFs.setStation(1);
+
+		FireStation fs = fsService.deleteFirestation(deleteFs);
+
+		assertThat(fs.getAddress()).isEqualTo("Rue de la loi");
+		assertThat(fs.getStation()).isEqualTo(1);
+	}
 }
-
-
-
-
-
-
-
-
