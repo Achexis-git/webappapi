@@ -12,7 +12,6 @@ import com.openclassrooms.webappapi.model.MedicalRecord;
 import com.openclassrooms.webappapi.model.MedicalRecords;
 import com.openclassrooms.webappapi.repository.JsonRepository;
 
-// TODO : Changes returns
 @Service
 public class MedicalRecordService {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
@@ -30,7 +29,7 @@ public class MedicalRecordService {
 		jsonRepository.setMedicalRecords(medicalRecords);
 		jsonRepository.save();
 
-		return newMedicalRecord;
+		return medicalRecords.getMrList().get(medicalRecords.getMrList().size() - 1);
 	}
 
 	public MedicalRecords readMedicalRecords() {
@@ -43,6 +42,8 @@ public class MedicalRecordService {
 		MedicalRecords medicalRecords = jsonRepository.getAllMedicalRecords();
 		List<MedicalRecord> mrList = medicalRecords.getMrList();
 
+		MedicalRecord updatedMedicalRecord = new MedicalRecord();
+
 		// Browse medical records
 		for (int i = 0; i < mrList.size(); i++) {
 			MedicalRecord mr = mrList.get(i);
@@ -53,6 +54,7 @@ public class MedicalRecordService {
 				medicalRecords.setMrIndex(i, newMedicalRecord);
 				logger.info("Updated medical record : {} {}", newMedicalRecord.getFirstName(),
 						newMedicalRecord.getLastName());
+				updatedMedicalRecord = medicalRecords.getMrList().get(i);
 				break;
 			}
 		}
@@ -60,13 +62,15 @@ public class MedicalRecordService {
 		jsonRepository.setMedicalRecords(medicalRecords);
 		jsonRepository.save();
 
-		return newMedicalRecord;
+		return updatedMedicalRecord;
 	}
 
 	public MedicalRecord deleteMedicalRecord(MedicalRecord delMedicalRecord) {
 		jsonRepository.load();
 		MedicalRecords medicalRecords = jsonRepository.getAllMedicalRecords();
 		List<MedicalRecord> mrList = medicalRecords.getMrList();
+
+		MedicalRecord deletedMedicalRecord = new MedicalRecord();
 
 		// 1) Browse medical records
 		for (int i = 0; i < mrList.size(); i++) {
@@ -78,6 +82,7 @@ public class MedicalRecordService {
 				medicalRecords.removeMrIndex(i);
 				logger.info("Deleted medical record : {} {}", delMedicalRecord.getFirstName(),
 						delMedicalRecord.getLastName());
+				deletedMedicalRecord = medicalRecords.getMrList().get(i);
 				break;
 			}
 		}
@@ -85,6 +90,6 @@ public class MedicalRecordService {
 		jsonRepository.setMedicalRecords(medicalRecords);
 		jsonRepository.save();
 
-		return delMedicalRecord;
+		return deletedMedicalRecord;
 	}
 }

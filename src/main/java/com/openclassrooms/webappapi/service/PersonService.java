@@ -12,7 +12,6 @@ import com.openclassrooms.webappapi.model.Person;
 import com.openclassrooms.webappapi.model.Persons;
 import com.openclassrooms.webappapi.repository.JsonRepository;
 
-// TODO : Change returns
 @Service
 public class PersonService {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
@@ -30,7 +29,7 @@ public class PersonService {
 		jsonRepository.setPersons(persons);
 		jsonRepository.save();
 
-		return newPerson;
+		return persons.getPersonList().get(persons.getPersonList().size() - 1);
 	}
 
 	public Persons readPersons() {
@@ -42,6 +41,8 @@ public class PersonService {
 		jsonRepository.load();
 		Persons persons = jsonRepository.getAllPersons();
 		List<Person> pList = persons.getPersonList();
+		
+		Person updatedPerson = new Person();
 
 		// 1) Parcours la liste
 		for (int i = 0; i < pList.size(); i++) {
@@ -52,6 +53,7 @@ public class PersonService {
 				// 3) Take list index
 				persons.setPersonIndex(i, newPerson);
 				logger.info("Updated person : {} {}", newPerson.getFirstName(), newPerson.getLastName());
+				updatedPerson = persons.getPersonList().get(i);
 				break;
 			}
 		}
@@ -61,7 +63,7 @@ public class PersonService {
 		// 5) Save les changements dans le fichier
 		jsonRepository.save();
 
-		return newPerson;
+		return updatedPerson;
 	}
 
 	public Person deletePerson(String firstName, String lastName) {
