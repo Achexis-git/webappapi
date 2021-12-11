@@ -12,6 +12,7 @@ import com.openclassrooms.webappapi.model.Person;
 import com.openclassrooms.webappapi.model.Persons;
 import com.openclassrooms.webappapi.repository.JsonRepository;
 
+// TODO : Change returns
 @Service
 public class PersonService {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);

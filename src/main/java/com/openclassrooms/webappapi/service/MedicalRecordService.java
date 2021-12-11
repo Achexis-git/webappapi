@@ -12,6 +12,7 @@ import com.openclassrooms.webappapi.model.MedicalRecord;
 import com.openclassrooms.webappapi.model.MedicalRecords;
 import com.openclassrooms.webappapi.repository.JsonRepository;
 
+// TODO : Changes returns
 @Service
 public class MedicalRecordService {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);

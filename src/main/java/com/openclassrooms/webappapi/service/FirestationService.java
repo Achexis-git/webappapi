@@ -29,7 +29,7 @@ public class FirestationService {
 		jsonRepository.setFirestations(firestations);
 		jsonRepository.save();
 
-		return newFirestation;
+		return firestations.getFsList().get(firestations.getFsList().size() - 1);
 	}
 
 	public FireStations readFirestations() {
@@ -41,6 +41,8 @@ public class FirestationService {
 		jsonRepository.load();
 		FireStations firestations = jsonRepository.getAllFireStations();
 		List<FireStation> fsList = firestations.getFsList();
+		
+		FireStation updatedFirestation = new FireStation();
 
 		// Browse firestations
 		for (int i = 0; i < fsList.size(); i++) {
@@ -51,6 +53,7 @@ public class FirestationService {
 				firestations.setFsIndex(i, newFirestation);
 				logger.info("Updated firestation : {} at address {}", newFirestation.getStation(),
 						newFirestation.getAddress());
+				updatedFirestation = firestations.getFsList().get(i);
 				break;
 			}
 		}
@@ -58,13 +61,15 @@ public class FirestationService {
 		jsonRepository.setFirestations(firestations);
 		jsonRepository.save();
 
-		return newFirestation;
+		return updatedFirestation;
 	}
 
 	public FireStation deleteFirestation(FireStation delFirestation) {
 		jsonRepository.load();
 		FireStations firestations = jsonRepository.getAllFireStations();
 		List<FireStation> fsList = firestations.getFsList();
+		
+		FireStation deletedFirestation = new FireStation();
 
 		// 1) Browse firestations
 		for (int i = 0; i < fsList.size(); i++) {
@@ -76,6 +81,7 @@ public class FirestationService {
 				firestations.removeFsIndex(i);
 				logger.info("Deleted firestation : {} at address {}", delFirestation.getStation(),
 						delFirestation.getAddress());
+				deletedFirestation = fs;
 				break;
 			}
 		}
@@ -83,7 +89,7 @@ public class FirestationService {
 		jsonRepository.setFirestations(firestations);
 		jsonRepository.save();
 
-		return delFirestation;
+		return deletedFirestation;
 	}
 
 }
