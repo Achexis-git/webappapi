@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.webappapi.WebappapiApplication;
 import com.openclassrooms.webappapi.model.Person;
 import com.openclassrooms.webappapi.model.Persons;
-import com.openclassrooms.webappapi.repository.JsonRepository;
 import com.openclassrooms.webappapi.service.PersonService;
 
 @RestController
@@ -23,13 +22,10 @@ public class PersonController {
 	@Autowired
 	private PersonService personService;
 
-	@Autowired
-	private JsonRepository jsonRepository;
-
 	@GetMapping(path = "/person", produces = "application/json")
 	public Persons getPersons() {
 		logger.info("Get persons");
-		return jsonRepository.getAllPersons();
+		return personService.readPersons();
 	}
 
 	// Body example : { "id":0, "firstName":"Winston", "lastName":"Churchill,

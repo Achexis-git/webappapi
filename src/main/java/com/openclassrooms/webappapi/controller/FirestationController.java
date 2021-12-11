@@ -16,7 +16,7 @@ import com.openclassrooms.webappapi.model.FireStations;
 import com.openclassrooms.webappapi.service.FirestationService;
 
 @RestController
-public class FireStationController {
+public class FirestationController {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
 	@Autowired
