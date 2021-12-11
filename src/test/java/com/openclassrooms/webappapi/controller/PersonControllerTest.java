@@ -12,7 +12,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.openclassrooms.webappapi.service.FirestationService;
 import com.openclassrooms.webappapi.service.PersonService;
 
 @WebMvcTest(controllers = PersonController.class)
@@ -25,7 +24,7 @@ public class PersonControllerTest {
 	private PersonService pService;
 
 	@Test
-	public void testPostFirestation() throws Exception {
+	public void postFirestationTest() throws Exception {
 		String body = "{ \"firstName\":\"Winston\", \"lastName\":\"Churchill\", "
 				+ "\"address\":\"951 LoneTree Rd\", \"city\":\"Culver\", \"zip\":\"97451\","
 				+ "\"phone\":\"841-874-7458\", \"email\":\"wc@email.com\" }";
@@ -33,12 +32,12 @@ public class PersonControllerTest {
 	}
 
 	@Test
-	public void testGetFirestation() throws Exception {
+	public void getFirestationTest() throws Exception {
 		mockMvc.perform(get("/person")).andExpect(status().isOk());
 	}
 
 	@Test
-	public void testPutFirestation() throws Exception {
+	public void putFirestationTest() throws Exception {
 		String body = "{ \"firstName\":\"John\", \"lastName\":\"Boyd\", "
 				+ "\"address\":\"951 LoneTree Rd\", \"city\":\"Culver\", \"zip\":\"97451\","
 				+ "\"phone\":\"841-874-7458\", \"email\":\"wc@email.com\" }";
@@ -46,7 +45,7 @@ public class PersonControllerTest {
 	}
 
 	@Test
-	public void testDeleteFirestation() throws Exception {
+	public void deleteFirestationTest() throws Exception {
 		String body = "{ \"firstName\":\"John\", \"lastName\":\"Boyd\" }";
 		mockMvc.perform(delete("/person").contentType("application/json").content(body)).andExpect(status().isOk());
 	}
