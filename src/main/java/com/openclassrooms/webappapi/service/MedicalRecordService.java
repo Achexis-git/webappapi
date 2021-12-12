@@ -79,10 +79,10 @@ public class MedicalRecordService {
 			if (mr.getFirstName().compareTo(delMedicalRecord.getFirstName()) == 0
 					&& mr.getLastName().compareTo(delMedicalRecord.getLastName()) == 0) {
 				// 3) Delete firestation
+				deletedMedicalRecord = medicalRecords.getMrList().get(i);
 				medicalRecords.removeMrIndex(i);
 				logger.info("Deleted medical record : {} {}", delMedicalRecord.getFirstName(),
 						delMedicalRecord.getLastName());
-				deletedMedicalRecord = medicalRecords.getMrList().get(i);
 				break;
 			}
 		}
