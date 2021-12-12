@@ -38,7 +38,7 @@ public class PersonServiceTest {
 		Person postPerson = new Person(0, "John", "Boyd", "Rue de la Loi, 16", "Culver", "92156", "953-158-432",
 				"jb@email.com");
 
-		Person person = personService.postPerson(postPerson);
+		Person person = personService.createPerson(postPerson);
 
 		// Vérifie que la person ajoutée est la bonne
 		assertThat(person.getFirstName()).isEqualTo("John");
@@ -58,7 +58,7 @@ public class PersonServiceTest {
 		Person putPerson = new Person(0, "Winston", "Churchill", "Rue de la Loi, 16", "Londres", "92156", "953-158-432",
 				"jb@email.com");
 
-		Person person = personService.putPerson(putPerson);
+		Person person = personService.updatePerson(putPerson);
 
 		assertThat(person.getCity()).isEqualTo("Londres");
 		assertThat(person.getEmail()).isEqualTo("jb@email.com");

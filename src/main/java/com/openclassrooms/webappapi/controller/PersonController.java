@@ -33,7 +33,7 @@ public class PersonController {
 	// "phone":"841-874-7458", "email":"wc@email.com" }
 	@PostMapping(path = "/person", consumes = "application/json", produces = "application/json")
 	public Person postPerson(@RequestBody Person person) {
-		return personService.postPerson(person);
+		return personService.createPerson(person);
 	}
 
 	// Body example : { "firstName":"John", "lastName":"Boyd", "address":"1509
@@ -41,7 +41,7 @@ public class PersonController {
 	// "email":"jb@email.com" }
 	@PutMapping(path = "/person", consumes = "application/json", produces = "application/json")
 	public Person putPerson(@RequestBody Person person) {
-		return personService.putPerson(person);
+		return personService.updatePerson(person);
 	}
 
 	// Body example : { "firstName":"John", "lastName":"Boyd" }

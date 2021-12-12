@@ -19,7 +19,7 @@ public class PersonService {
 	@Autowired
 	private JsonRepository jsonRepository;
 
-	public Person postPerson(Person newPerson) {
+	public Person createPerson(Person newPerson) {
 		jsonRepository.load();
 		Persons persons = jsonRepository.getAllPersons();
 
@@ -37,7 +37,7 @@ public class PersonService {
 		return jsonRepository.getAllPersons();
 	}
 
-	public Person putPerson(Person newPerson) {
+	public Person updatePerson(Person newPerson) {
 		jsonRepository.load();
 		Persons persons = jsonRepository.getAllPersons();
 		List<Person> pList = persons.getPersonList();
