@@ -24,7 +24,7 @@ public class PersonServiceTest {
 
 	@BeforeEach
 	public void init() {
-		// Paramétrise le mock
+		// Configure the mock
 		Person mockPerson = new Person(0, "Winston", "Churchill", "Rue de la Loi, 16", "Culver", "92156", "953-158-432",
 				"wc@email.com");
 		Persons mockPersons = new Persons();
@@ -34,43 +34,54 @@ public class PersonServiceTest {
 
 	@Test
 	public void personPostTest() {
+		// GIVEN
 		// Station to be added
 		Person postPerson = new Person(0, "John", "Boyd", "Rue de la Loi, 16", "Culver", "92156", "953-158-432",
 				"jb@email.com");
 
+		// WHEN
 		Person person = personService.createPerson(postPerson);
 
-		// Vérifie que la person ajoutée est la bonne
+		// THEN
+		// Verify the person is correctly added
 		assertThat(person.getFirstName()).isEqualTo("John");
 		assertThat(person.getLastName()).isEqualTo("Boyd");
 	}
 
 	@Test
 	public void personGetTest() {
+		// WHEN
 		Persons persons = personService.readPersons();
 
+		// THEN
 		assertThat(persons.getPersonList().get(0).getFirstName()).isEqualTo("Winston");
 		assertThat(persons.getPersonList().get(0).getLastName()).isEqualTo("Churchill");
 	}
 
 	@Test
 	public void personPutTest() {
+		// GIVEN
 		Person putPerson = new Person(0, "Winston", "Churchill", "Rue de la Loi, 16", "Londres", "92156", "953-158-432",
 				"jb@email.com");
 
+		// WHEN
 		Person person = personService.updatePerson(putPerson);
 
+		// THEN
 		assertThat(person.getCity()).isEqualTo("Londres");
 		assertThat(person.getEmail()).isEqualTo("jb@email.com");
 	}
 
 	@Test
 	public void personDeleteTest() {
+		// GIVEN
 		Person mockPerson = new Person(0, "Winston", "Churchill", "Rue de la Loi, 16", "Culver", "92156", "953-158-432",
 				"wc@email.com");
 
+		// WHEN
 		Person person = personService.deletePerson(mockPerson.getFirstName(), mockPerson.getLastName());
 
+		// THEN
 		assertThat(person.getFirstName()).isEqualTo("Winston");
 		assertThat(person.getLastName()).isEqualTo("Churchill");
 	}

@@ -24,7 +24,7 @@ public class FirestationServiceTest {
 
 	@BeforeEach
 	public void init() {
-		// Paramétrise le mock
+		// Configure the mock
 		FireStation mockFs = new FireStation();
 		mockFs.setAddress("Rue de la loi");
 		mockFs.setStation(1);
@@ -35,51 +35,58 @@ public class FirestationServiceTest {
 
 	@Test
 	public void firestationPostTest() {
+		// GIVEN
 		// Station to be added
 		FireStation postFs = new FireStation();
 		postFs.setAddress("Rue de l'église");
 		postFs.setStation(2);
 
+		// WHEN
 		FireStation fs = fsService.createFirestation(postFs);
 
-		// Vérifie que la station ajoutée est la bonne
+		// THEN
+		// Verify that the station is correctly added
 		assertThat(fs.getAddress()).isEqualTo("Rue de l'église");
 		assertThat(fs.getStation()).isEqualTo(2);
 	}
 
 	@Test
 	public void firestationGetTest() {
-
-		// Test la méthode
+		// WHEN
 		FireStations firestations = fsService.readFirestations();
 
-		// Vérifie le résultat
+		// THEN
 		assertThat(firestations.getFsList().get(0).getAddress()).isEqualTo("Rue de la loi");
 		assertThat(firestations.getFsList().get(0).getStation()).isEqualTo(1);
 	}
 
 	@Test
 	public void firestationPutTest() {
+		// GIVEN
 		// Station to be updated
 		FireStation putFs = new FireStation();
 		putFs.setAddress("Rue de la loi");
 		putFs.setStation(2);
 
+		// WHEN
 		FireStation fs = fsService.updateFirestation(putFs);
 
-		// Vérifie que la station ajoutée est la bonne
+		// THEN
 		assertThat(fs.getAddress()).isEqualTo("Rue de la loi");
 		assertThat(fs.getStation()).isEqualTo(2);
 	}
 
 	@Test
 	public void firestationDeleteTest() {
+		// GIVEN
 		FireStation deleteFs = new FireStation();
 		deleteFs.setAddress("Rue de la loi");
 		deleteFs.setStation(1);
 
+		// WHEN
 		FireStation fs = fsService.deleteFirestation(deleteFs);
 
+		// THEN
 		assertThat(fs.getAddress()).isEqualTo("Rue de la loi");
 		assertThat(fs.getStation()).isEqualTo(1);
 	}

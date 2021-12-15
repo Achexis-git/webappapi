@@ -27,7 +27,7 @@ public class MedicalRecordTest {
 
 	@BeforeEach
 	public void init() {
-		// Paramétrise le mock
+		// Configure the mock
 		List<String> medications = new ArrayList<String>();
 		List<String> allergies = new ArrayList<String>();
 		MedicalRecord mockMedicalRecord = new MedicalRecord("Winston", "Churchill", "10/06/1896", medications,
@@ -39,48 +39,59 @@ public class MedicalRecordTest {
 
 	@Test
 	public void medicalRecordPostTest() {
+		// GIVEN
 		// Medical Record to be added
 		List<String> medications = new ArrayList<String>();
 		List<String> allergies = new ArrayList<String>();
 		MedicalRecord postMedicalRecord = new MedicalRecord("John", "Churchill", "10/06/1896", medications, allergies);
 
+		// WHEN
 		MedicalRecord mr = mrService.createMedicalRecord(postMedicalRecord);
 
-		// Vérifie que le medical record ajoutée est le bon
+		// THEN
+		// Verify the medical record is correctly added
 		assertThat(mr.getFirstName()).isEqualTo("John");
 		assertThat(mr.getLastName()).isEqualTo("Churchill");
 	}
 
 	@Test
 	public void medicalRecordGetTest() {
+		// WHEN
 		MedicalRecords mr = mrService.readMedicalRecords();
 
+		// THEN
 		assertThat(mr.getMrList().get(0).getFirstName()).isEqualTo("Winston");
 		assertThat(mr.getMrList().get(0).getLastName()).isEqualTo("Churchill");
 	}
 
 	@Test
 	public void medicalRecordPutTest() {
+		// GIVEN
 		List<String> medications = new ArrayList<String>();
 		List<String> allergies = new ArrayList<String>();
 		MedicalRecord putMedicalRecord = new MedicalRecord("Winston", "Churchill", "10/25/1896", medications,
 				allergies);
 
+		// WHEN
 		MedicalRecord mr = mrService.updateMedicalRecord(putMedicalRecord);
 
+		// THEN
 		assertThat(mr.getBirthdate()).isEqualTo("10/25/1896");
 		assertThat(mr.getFirstName()).isEqualTo("Winston");
 	}
 
 	@Test
 	public void medicalRecordDeleteTest() {
+		// GIVEN
 		List<String> medications = new ArrayList<String>();
 		List<String> allergies = new ArrayList<String>();
 		MedicalRecord deleteMedicalRecord = new MedicalRecord("Winston", "Churchill", "10/06/1896", medications,
 				allergies);
 
+		// WHEN
 		MedicalRecord mr = mrService.deleteMedicalRecord(deleteMedicalRecord);
 
+		// THEN
 		assertThat(mr.getFirstName()).isEqualTo("Winston");
 		assertThat(mr.getLastName()).isEqualTo("Churchill");
 	}
