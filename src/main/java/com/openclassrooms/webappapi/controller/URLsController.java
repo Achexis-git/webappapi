@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.webappapi.WebappapiApplication;
-import com.openclassrooms.webappapi.model.Home;
-import com.openclassrooms.webappapi.model.HomeChildren;
-import com.openclassrooms.webappapi.model.InhabitantFire;
-import com.openclassrooms.webappapi.model.PersonInfo;
-import com.openclassrooms.webappapi.model.PersonsAndCountdown;
+import com.openclassrooms.webappapi.model.response.Home;
+import com.openclassrooms.webappapi.model.response.HomeChildren;
+import com.openclassrooms.webappapi.model.response.InhabitantFire;
+import com.openclassrooms.webappapi.model.response.PersonInfo;
+import com.openclassrooms.webappapi.model.response.PersonsAndCountdown;
 import com.openclassrooms.webappapi.service.URLsService;
 
 @RestController

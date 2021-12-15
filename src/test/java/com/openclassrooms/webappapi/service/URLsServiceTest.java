@@ -18,15 +18,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import com.openclassrooms.webappapi.WebappapiApplication;
 import com.openclassrooms.webappapi.model.FireStation;
 import com.openclassrooms.webappapi.model.FireStations;
-import com.openclassrooms.webappapi.model.Home;
-import com.openclassrooms.webappapi.model.HomeChildren;
 import com.openclassrooms.webappapi.model.MedicalRecord;
 import com.openclassrooms.webappapi.model.MedicalRecords;
 import com.openclassrooms.webappapi.model.Person;
-import com.openclassrooms.webappapi.model.PersonInfo;
 import com.openclassrooms.webappapi.model.Persons;
-import com.openclassrooms.webappapi.model.PersonsAndCountdown;
-import com.openclassrooms.webappapi.model.InhabitantFire;
+import com.openclassrooms.webappapi.model.response.Home;
+import com.openclassrooms.webappapi.model.response.HomeChildren;
+import com.openclassrooms.webappapi.model.response.InhabitantFire;
+import com.openclassrooms.webappapi.model.response.PersonInfo;
+import com.openclassrooms.webappapi.model.response.PersonsAndCountdown;
 import com.openclassrooms.webappapi.repository.JsonRepository;
 
 // TODO: Renommer les tests

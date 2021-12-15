@@ -15,18 +15,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.webappapi.WebappapiApplication;
-import com.openclassrooms.webappapi.model.PersonInfo;
-import com.openclassrooms.webappapi.model.Adult;
-import com.openclassrooms.webappapi.model.Child;
 import com.openclassrooms.webappapi.model.FireStation;
-import com.openclassrooms.webappapi.model.Home;
-import com.openclassrooms.webappapi.model.HomeChildren;
-import com.openclassrooms.webappapi.model.HomeInhabitant;
-import com.openclassrooms.webappapi.model.InhabitantFire;
 import com.openclassrooms.webappapi.model.MedicalRecord;
 import com.openclassrooms.webappapi.model.Person;
 import com.openclassrooms.webappapi.model.Persons;
-import com.openclassrooms.webappapi.model.PersonsAndCountdown;
+import com.openclassrooms.webappapi.model.response.Adult;
+import com.openclassrooms.webappapi.model.response.Child;
+import com.openclassrooms.webappapi.model.response.Home;
+import com.openclassrooms.webappapi.model.response.HomeChildren;
+import com.openclassrooms.webappapi.model.response.HomeInhabitant;
+import com.openclassrooms.webappapi.model.response.InhabitantFire;
+import com.openclassrooms.webappapi.model.response.PersonInfo;
+import com.openclassrooms.webappapi.model.response.PersonsAndCountdown;
 import com.openclassrooms.webappapi.repository.JsonRepository;
 
 @Service
