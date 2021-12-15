@@ -1,4 +1,4 @@
-package com.openclassrooms.webappapi.model;
+package com.openclassrooms.webappapi.model.response;
 
 public class Child {
 	private String firstName;

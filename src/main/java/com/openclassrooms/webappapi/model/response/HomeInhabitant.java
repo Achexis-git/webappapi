@@ -1,12 +1,12 @@
-package com.openclassrooms.webappapi.model;
+package com.openclassrooms.webappapi.model.response;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonInfo {
+public class HomeInhabitant {
 	private String firstName;
 	private String lastName;
-	private String email;
+	private String phone;
 	private int age;
 	private List<String> medication;
 	private List<String> allergies;
@@ -19,8 +19,8 @@ public class PersonInfo {
 		this.lastName = lastName;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public void setAge(int age) {
@@ -43,8 +43,8 @@ public class PersonInfo {
 		return lastName;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getPhone() {
+		return phone;
 	}
 
 	public int getAge() {

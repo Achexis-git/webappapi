@@ -1,4 +1,6 @@
-package com.openclassrooms.webappapi.model;
+package com.openclassrooms.webappapi.model.response;
+
+import com.openclassrooms.webappapi.model.Persons;
 
 public class PersonsAndCountdown {
 	private Persons persons;

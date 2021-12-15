@@ -1,4 +1,4 @@
-package com.openclassrooms.webappapi.model;
+package com.openclassrooms.webappapi.model.response;
 
 import java.util.ArrayList;
 import java.util.List;
