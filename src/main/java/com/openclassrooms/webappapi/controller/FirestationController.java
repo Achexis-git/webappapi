@@ -28,7 +28,7 @@ public class FirestationController {
 		return fsService.createFirestation(firestation);
 	}
 
-	@GetMapping(path = "/firestation", produces = "application/json")
+	@GetMapping(path = "/firestation/", produces = "application/json")
 	public FireStations getFireStations() {
 		logger.info("Getting firestations");
 		return fsService.readFirestations();
