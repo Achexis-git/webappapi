@@ -17,7 +17,7 @@ public class MedicalRecordService {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
 	@Autowired
-	JsonRepository jsonRepository;
+	private JsonRepository jsonRepository;
 
 	public MedicalRecord createMedicalRecord(MedicalRecord newMedicalRecord) {
 		jsonRepository.load();
