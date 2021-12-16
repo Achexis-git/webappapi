@@ -50,31 +50,31 @@ public class URLsService {
 		int childrenCountdown = 0;
 		int adultsCountdown = 0;
 
-		// 1) Parcours les firestations
+		// 1) Browse firestations
 		for (FireStation fs : fsList) {
-			// 2) Si le station number match
+			// 2) If number match
 			if (fs.getStation() == stationNumber) {
-				// 3) Parcours les personnes
-				for (int i = 0; i < pList.size(); i++) { // cette boucle car doit pop les personnes
+				// 3) Browse persons
+				for (int i = 0; i < pList.size(); i++) {
 					Person p = pList.get(i);
-					// 4) Si l'adresse match
+					// 4) If address match
 					if (p.getAddress().compareTo(fs.getAddress()) == 0) {
-						// 5) Ajoute la personne à la liste
+						// 5) Add the person to the list
 						persons.addPerson(p);
-						// 6) Parcours les medical record
+						// 6) Browse medical records
 						for (MedicalRecord mr : mrList) {
-							// 7) Si nom prénom match
+							// 7) If same first name, last name
 							if (p.getFirstName().compareTo(mr.getFirstName()) == 0
 									& p.getLastName().compareTo(mr.getLastName()) == 0) {
-								// 8) Calcule l'âge et incrémente en fonction
+								// 8) Compute age and increment the variable
 								if (computeAge(mr.getBirthdate()) > 18) {
 									adultsCountdown++;
 								} else {
 									childrenCountdown++;
 								}
-								// 9) Pop le mr en cas de même nom prénom
+								// 9) Pop the mr (if 2 persons have the same name)
 								mrList.remove(mr);
-								// 10) Pop p en cas de même nom prénom
+								// 10) Pop p ''
 								pList.remove(i);
 								i--;
 								break;
@@ -102,19 +102,19 @@ public class URLsService {
 		List<Adult> adultList = new ArrayList<Adult>();
 		hc.setAddress(address);
 
-		// 1) Parcours la liste de personnes
+		// 1) Browse persons
 		for (int i = 0; i < pList.size(); i++) {
 			Person p = pList.get(i);
-			// 2) Si à la bonne adresse
+			// 2) If same address
 			if (p.getAddress().compareTo(address) == 0) {
-				// 3) On regarde le medical record
+				// 3) Browse medical records
 				for (MedicalRecord mr : mrList) {
-					// 4) Regarde si nom et prénom match
+					// 4) If same first name, last name
 					if (mr.getFirstName().compareTo(p.getFirstName()) == 0
 							& mr.getLastName().compareTo(p.getLastName()) == 0) {
-						// 5) On regarde l'age
+						// 5) Compute age
 						int age = computeAge(mr.getBirthdate());
-						// 6) Complète en fonction
+						// 6) Complete the list
 						if (age > 18) {
 							Adult a = new Adult();
 							a.setFirstName(p.getFirstName());
@@ -127,10 +127,10 @@ public class URLsService {
 							c.setAge(age);
 							childList.add(c);
 						}
-						// 7) Remove le mr et break la boucle (cas même nom prénom)
+						// 7) Remove the mr & break the loop (2 persons same name)
 						mrList.remove(mr);
 						pList.remove(i);
-						i--; // 8) Pour équilibre avec le remove
+						i--; // 8) Because remove an item
 						break;
 					}
 				}
@@ -150,22 +150,22 @@ public class URLsService {
 
 		List<String> phoneList = new ArrayList<String>();
 
-		// 1) Parcours la liste de fire station
+		// 1) Browse firestations
 		for (FireStation fs : fsList) {
-			// 2) Si la fs a le bon num
+			// 2) If same number
 			if (fs.getStation() == stationNumber) {
-				// 3) On parcours les personnes
+				// 3) Browse persons
 				for (Person p : pList) {
-					// 4) Si bonne adresse
+					// 4) If same address
 					if (fs.getAddress().compareTo(p.getAddress()) == 0) {
-						// 5) On ajoute le numéro de téléphone à la liste
+						// 5) Add phone number
 						phoneList.add(p.getPhone());
 					}
 				}
 			}
 		}
 
-		// 6) On élimine les doublons
+		// 6) Remove double
 		phoneList = new ArrayList<String>(new HashSet<String>(phoneList));
 		return phoneList;
 	}
@@ -176,15 +176,15 @@ public class URLsService {
 
 		List<String> emails = new ArrayList<String>();
 
-		// 1) Parcours la liste
+		// 1) Browse persons
 		for (Person p : pList) {
-			// 2) Si la city de la personne est la même que le param on ajoute son email
+			// 2) If same city
 			if (p.getCity().compareTo(city) == 0) {
 				emails.add(p.getEmail());
 			}
 		}
 
-		// 3) Enlève les doublons en transformant la liste en set puis re en liste
+		// 3) Remove double
 		emails = new ArrayList<String>(new HashSet<String>(emails));
 		return emails;
 	}
@@ -197,49 +197,49 @@ public class URLsService {
 
 		InhabitantFire iFire = new InhabitantFire();
 
-		// 1) Cherche le numéro de station
-		// 1.1) Parcours la liste des stations
+		// 1) Search station number
+		// 1.1) Browse stations
 		for (FireStation fs : fsList) {
-			// 1.2) Si bonne adresse
+			// 1.2) If same address
 			if (fs.getAddress().compareTo(address) == 0) {
-				// 1.3) Set le numéro de station
+				// 1.3) Set station number
 				iFire.setStationNumber(fs.getStation());
 				break;
 			}
 		}
 
-		// 2) Cherche les personnes qui vivent à l'adresse
+		// 2) Search persons living at that address
 		Home home = new Home();
 		home.setAddress(address);
-		// 2.1) Parcours la liste de personnes
+		// 2.1) Browse persons
 		for (Person p : pList) {
-			// 2.2) Si bonne adresse
+			// 2.2) If same address
 			if (p.getAddress().compareTo(address) == 0) {
-				// 2.3) Ajoute les données à hi
+				// 2.3) Add data home inhabitant
 				HomeInhabitant hi = new HomeInhabitant();
 				hi.setFirstName(p.getFirstName());
 				hi.setLastName(p.getLastName());
 				hi.setPhone(p.getPhone());
-				// 2.4) Parcours le medical record
+				// 2.4) Browse medical records
 				for (MedicalRecord mr : mrList) {
-					// 2.5 Si bon nom prénom
+					// 2.5 If same first name, last name
 					if (mr.getFirstName().compareTo(p.getFirstName()) == 0
 							& mr.getLastName().compareTo(p.getLastName()) == 0) {
-						// 2.6) Ajoute le mr
+						// 2.6) Add the mr
 						hi.setMedication(mr.getMedications());
 						hi.setAllergies(mr.getAllergies());
 						hi.setAge(computeAge(mr.getBirthdate()));
-						// 2.7) Remove mr dans le cas de même nom prénom et break
+						// 2.7) Remove mr & break
 						mrList.remove(mr);
 						break;
 					}
 				}
-				// 2.8) Ajoute l'hi au home
+				// 2.8) Add home inhabitant at the home
 				home.addHomeInhabitant(hi);
 			}
 		}
 
-		// 2.9) Ajoute le home à iFire
+		// 2.9) Add the home at iFire
 		iFire.setHome(home);
 
 		return iFire;
@@ -254,56 +254,48 @@ public class URLsService {
 		List<Home> homes = new ArrayList<Home>();
 
 		logger.debug("Taille de la liste " + fsList.size());
-		// fsList 3x trop grande
-		// mrList 2x trop grande
-		// => Bug dans jsonRepository / trouvé dois reset les attributs avant de les
-		// reremplir à la lecture du fichier
 
-		// 1) Parcours les firestations
+		// 1) Browse firestations
 		for (FireStation fs : fsList) {
-			logger.trace("Tour de boucle fs");
-			// 2) Si le numéro de la firestation est dans la liste des station number
+			logger.trace("Loop fs");
+			// 2) If firestation in list
 			if (stations.contains(fs.getStation())) {
-				logger.trace("Dans la condition");
-				// 3) On crée un new Home et on initialise son adresse
+				logger.trace("In condition");
+				// 3) Set new home & initialize its address
 				Home home = new Home();
 				home.setAddress(fs.getAddress());
-				// 4) Parcours la liste des personnes pour voir qui habite là
+				// 4) Browse persons
 				for (int i = 0; i < pList.size(); i++) {
 					Person p = pList.get(i);
-					// 5) Si personne à la bonne adresse
+					// 5) If same address
 					if (p.getAddress().compareTo(home.getAddress()) == 0) {
-						// 6) On crée un HomeInhabitant et on initialise ses valeurs
+						// 6) Set HomeInhabitant & initialize its attributes
 						HomeInhabitant hi = new HomeInhabitant();
 						hi.setFirstName(p.getFirstName());
 						hi.setLastName(p.getLastName());
 						hi.setPhone(p.getPhone());
-						// 7) Parcours les medical record pour trouver notre habitant
+						// 7) Browse medical records
 						for (MedicalRecord mr : mrList) {
-							// 8) Si le même nom et prénom
-							// Potentiel problème si 2 habitants ont le même nom
-							// Mais les mr donnent juste les noms prénoms pour différencier, donc pas de
-							// solution
+							// 8) If same first name, last name
 							if (mr.getFirstName().compareTo(hi.getFirstName()) == 0
 									& mr.getLastName().compareTo(hi.getLastName()) == 0) {
-								// 9) On ajoute le MR à hi
+								// 9) Add mr at home inhabitant
 								hi.setMedication(mr.getMedications());
 								hi.setAllergies(mr.getAllergies());
-								// Calcule age
+								// Compute age
 								hi.setAge(computeAge(mr.getBirthdate()));
-								// 9.1) Pop le mr et break la boucle en cas de même nom prénom
+								// 9.1) Pop mr & break
 								mrList.remove(mr);
 								pList.remove(i);
 								i--;
 								break;
 							}
 						}
-						// 10) Ajoute l'habitant au foyer
+						// 10) Add hi to home
 						home.addHomeInhabitant(hi);
 					}
 				}
-				// 11) On ajoute le foyer à la liste de foyers
-				homes.add(home);
+				// 11) Add home to home list
 			}
 		}
 		return homes;
@@ -339,38 +331,35 @@ public class URLsService {
 
 		List<PersonInfo> piList = new ArrayList<PersonInfo>();
 
-		// 1) Parcours la liste de personnes
+		// 1) Browse persons
 		logger.debug("Ready to browse the person list");
-		for (int i = 0; i < pList.size(); i++) { // Peut pas utiliser l'autre boucle car remove des éléments dans la
-													// boucle
+		for (int i = 0; i < pList.size(); i++) {
 			Person p = pList.get(i);
-			// 2) Si le bon nom et prénom
+			// 2) If same first name, last name
 			if (p.getFirstName().compareTo(firstName) == 0 & p.getLastName().compareTo(lastName) == 0) {
 				logger.debug("Got a person with the right name");
-				// 3) Crée une personInfo et remplit ses attributs
+				// 3) Create personInfo and initialize its attributes
 				PersonInfo pi = new PersonInfo();
 				pi.setFirstName(p.getFirstName());
 				pi.setLastName(p.getLastName());
 				pi.setEmail(p.getEmail());
 
-				// 4) Parcours la liste de medical record
+				// 4) Browse medical records
 				for (MedicalRecord mr : mrList) {
-					// 5) Si le bon nom et prénom
+					// 5) If same first name, last name
 					if (mr.getFirstName().compareTo(firstName) == 0 & mr.getLastName().compareTo(lastName) == 0) {
 						logger.debug("Got a medical record with the right name");
-						// 6) On ajoute les valeurs au personal info
+						// 6) Add values person info
 						pi.setMedication(mr.getMedications());
 						pi.setAllergies(mr.getAllergies());
 						pi.setAge(computeAge(mr.getBirthdate()));
-						// 7) Prendre en compte le cas où il y a plusieurs personnes avec les même nom
-						// et prénom => on pop le mr et la personne et on sort des loop avec un break
 						mrList.remove(mr);
 						pList.remove(i);
-						i--; // Dois retirer 1 à i car le remove retire 1 au éléments suivants de la liste
+						i--; // Adjust because pop an item
 						break;
 					}
 				}
-				// 8) Ajoute le pi à la liste
+				// 8) Add person info to list
 				piList.add(pi);
 			}
 		}

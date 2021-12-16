@@ -44,13 +44,13 @@ public class MedicalRecordService {
 
 		MedicalRecord updatedMedicalRecord = new MedicalRecord();
 
-		// Browse medical records
+		// 1) Browse medical records
 		for (int i = 0; i < mrList.size(); i++) {
 			MedicalRecord mr = mrList.get(i);
-			// If same first name last name
+			// 2) If same first name last name
 			if (mr.getFirstName().compareTo(newMedicalRecord.getFirstName()) == 0
 					&& mr.getLastName().compareTo(newMedicalRecord.getLastName()) == 0) {
-				// Update medical record
+				// 3) Update medical record
 				medicalRecords.setMrIndex(i, newMedicalRecord);
 				logger.info("Updated medical record : {} {}", newMedicalRecord.getFirstName(),
 						newMedicalRecord.getLastName());

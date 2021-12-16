@@ -44,12 +44,12 @@ public class FirestationService {
 
 		FireStation updatedFirestation = new FireStation();
 
-		// Browse firestations
+		// 1) Browse firestations
 		for (int i = 0; i < fsList.size(); i++) {
 			FireStation fs = fsList.get(i);
-			// If same addresses
+			// 2) If same addresses
 			if (fs.getAddress().compareTo(newFirestation.getAddress()) == 0) {
-				// Update firestation
+				// 3) Update firestation
 				firestations.setFsIndex(i, newFirestation);
 				updatedFirestation = firestations.getFsList().get(i);
 				logger.info("Updated firestation : {} at address {}", updatedFirestation.getStation(),

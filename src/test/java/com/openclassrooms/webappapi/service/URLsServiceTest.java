@@ -43,6 +43,7 @@ public class URLsServiceTest {
 
 	@BeforeEach
 	public void init() {
+		// GIVEN
 		// Configure mock person
 		Person mockPerson = new Person(0, "Winston", "Churchill", "Rue de la Loi, 16", "Culver", "92156", "953-158-432",
 				"wc@email.com");
@@ -72,10 +73,10 @@ public class URLsServiceTest {
 
 	@Test
 	public void getPeopleCloseToFirestationTest() {
-		// ACT
+		// WHEN
 		PersonsAndCountdown pacd = urlsService.getPeoplesCloseToFireStation(1);
 
-		// ASSERT
+		// THEN
 		assertThat(pacd.getAdultCountdown()).isEqualTo(1);
 		assertThat(pacd.getChildrenCountdown()).isZero();
 		verify(jsonRepository).getAllFireStations();
@@ -85,7 +86,7 @@ public class URLsServiceTest {
 
 	@Test
 	public void getChildAddressTest() {
-		// ARRANGE
+		// GIVEN
 		// Add a child to the mock
 		// Configure mock person
 		Person mockPerson = new Person(0, "John", "Churchill", "Rue de la Loi, 16", "Culver", "92156", "953-158-432",
@@ -102,84 +103,75 @@ public class URLsServiceTest {
 		mockMr.addMedicalRecord(mockMedicalRecord);
 		Mockito.when(jsonRepository.getAllMedicalRecords()).thenReturn(mockMr);
 
-		// ACT
+		// WHEN
 		HomeChildren hc = urlsService.getChildAddress("Rue de la Loi, 16");
 
-		// ASSERT
+		// THEN
 		assertThat(hc.getChildList().get(0).getFirstName()).isEqualTo("John");
 		assertThat(hc.getChildList().get(0).getLastName()).isEqualTo("Churchill");
 		assertThat(hc.getAdultList().size()).isZero();
 		verify(jsonRepository).getAllPersons();
 		verify(jsonRepository).getAllMedicalRecords();
 	}
-	
+
 	@Test
 	public void getPhoneCloseToFirestationTest() {
-		// ACT
+		// WHEN
 		List<String> phones = urlsService.getPhoneCloseToFirestation(1);
-		
-		// ASSERT
+
+		// THEN
 		assertThat(phones.get(0)).isEqualTo("953-158-432");
 		verify(jsonRepository).getAllFireStations();
 		verify(jsonRepository).getAllPersons();
 	}
-	
+
 	@Test
 	public void getAllEmailCityTest() {
-		// ACT
+		// WHEN
 		List<String> emails = urlsService.getAllEmailCity("Culver");
-		
-		// ASSERT
+
+		// THEN
 		assertThat(emails.get(0)).isEqualTo("wc@email.com");
 		verify(jsonRepository).getAllPersons();
 	}
-	
+
 	@Test
 	public void getPosologieCloseToFirestationTest() {
-		// ACT
+		// WHEN
 		InhabitantFire iFire = urlsService.getPosologieCloseToFirestation("Rue de la Loi, 16");
-		
-		// ASSERT
+
+		// THEN
 		assertThat(iFire.getStationNumber()).isEqualTo(1);
 		assertThat(iFire.getHome().getHomeInhabitantList().get(0).getFirstName()).isEqualTo("Winston");
 		verify(jsonRepository).getAllFireStations();
 		verify(jsonRepository).getAllMedicalRecords();
 		verify(jsonRepository).getAllPersons();
 	}
-	
+
 	@Test
 	public void getHomesCloseToStationsTest() {
-		// ARRANGE
+		// GIVEN
 		List<Integer> stations = new ArrayList<>();
 		stations.add(1);
-		
-		// ACT
+
+		// WHEN
 		List<Home> homes = urlsService.getHomesCloseToStations(stations);
-		
-		// ASSERT
+
+		// THEN
 		assertThat(homes.get(0).getAddress()).isEqualTo("Rue de la Loi, 16");
 		assertThat(homes.get(0).getHomeInhabitantList().get(0).getFirstName()).isEqualTo("Winston");
 		verify(jsonRepository).getAllFireStations();
 		verify(jsonRepository).getAllMedicalRecords();
 		verify(jsonRepository).getAllPersons();
 	}
-	
+
 	@Test
 	public void getPersonInfoTest() {
-		// ACT
+		// WHEN
 		List<PersonInfo> pi = urlsService.getPersonInfo("Winston", "Churchill");
-		
-		// ASSERT
+
+		// THEN
 		assertThat(pi.get(0).getEmail()).isEqualTo("wc@email.com");
 		verify(jsonRepository).getAllPersons();
 	}
 }
-
-
-
-
-
-
-
-
-
