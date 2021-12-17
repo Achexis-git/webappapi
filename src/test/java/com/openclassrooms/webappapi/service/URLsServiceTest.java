@@ -158,6 +158,7 @@ public class URLsServiceTest {
 		List<Home> homes = urlsService.getHomesCloseToStations(stations);
 
 		// THEN
+		assertThat(homes.size()).isNotZero();
 		assertThat(homes.get(0).getAddress()).isEqualTo("Rue de la Loi, 16");
 		assertThat(homes.get(0).getHomeInhabitantList().get(0).getFirstName()).isEqualTo("Winston");
 		verify(jsonRepository).getAllFireStations();

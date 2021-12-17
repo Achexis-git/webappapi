@@ -253,7 +253,7 @@ public class URLsService {
 
 		List<Home> homes = new ArrayList<Home>();
 
-		logger.debug("Taille de la liste " + fsList.size());
+		logger.trace("List size " + fsList.size());
 
 		// 1) Browse firestations
 		for (FireStation fs : fsList) {
@@ -296,6 +296,7 @@ public class URLsService {
 					}
 				}
 				// 11) Add home to home list
+				homes.add(home);
 			}
 		}
 		return homes;
