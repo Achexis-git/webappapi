@@ -16,6 +16,9 @@ import com.openclassrooms.webappapi.WebappapiApplication;
  *
  */
 public class Persons {
+	/**
+	 * Logger
+	 */
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
 	private List<Person> personList;

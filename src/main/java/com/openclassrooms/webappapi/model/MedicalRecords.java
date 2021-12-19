@@ -16,6 +16,9 @@ import com.openclassrooms.webappapi.WebappapiApplication;
  *
  */
 public class MedicalRecords {
+	/**
+	 * Logger
+	 */
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
 	private List<MedicalRecord> mrList;

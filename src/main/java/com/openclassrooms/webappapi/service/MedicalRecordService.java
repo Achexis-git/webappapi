@@ -12,13 +12,33 @@ import com.openclassrooms.webappapi.model.MedicalRecord;
 import com.openclassrooms.webappapi.model.MedicalRecords;
 import com.openclassrooms.webappapi.repository.JsonRepository;
 
+/**
+ * Execute the instructions send by the associated controller
+ * 
+ * @author alexis
+ * @version 1.0
+ * @see com.openclassrooms.webappapi.controller.MedicalRecordController
+ *
+ */
 @Service
 public class MedicalRecordService {
+	/**
+	 * Logger
+	 */
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
+	/**
+	 * Allows interact with the file
+	 */
 	@Autowired
 	private JsonRepository jsonRepository;
 
+	/**
+	 * Load the medical records, add the new medical record, and save the new list
+	 * 
+	 * @param newMedicalRecord Medical record to add
+	 * @return Added medical record
+	 */
 	public MedicalRecord createMedicalRecord(MedicalRecord newMedicalRecord) {
 		jsonRepository.load();
 		MedicalRecords medicalRecords = jsonRepository.getAllMedicalRecords();
@@ -32,11 +52,22 @@ public class MedicalRecordService {
 		return medicalRecords.getMrList().get(medicalRecords.getMrList().size() - 1);
 	}
 
+	/**
+	 * Load the medical records and get them all
+	 * 
+	 * @return An object containing the medical records
+	 */
 	public MedicalRecords readMedicalRecords() {
 		jsonRepository.load();
 		return jsonRepository.getAllMedicalRecords();
 	}
 
+	/**
+	 * Load the medical records, update the medical record at the given address and save the new list
+	 * 
+	 * @param newMedicalRecord Medical record to update
+	 * @return Updated medical record
+	 */
 	public MedicalRecord updateMedicalRecord(MedicalRecord newMedicalRecord) {
 		jsonRepository.load();
 		MedicalRecords medicalRecords = jsonRepository.getAllMedicalRecords();
@@ -65,6 +96,11 @@ public class MedicalRecordService {
 		return updatedMedicalRecord;
 	}
 
+	/**
+	 * Load the medical records, delete the medical record with the right address and save the new list
+	 * @param delMedicalRecord Medical record to delete
+	 * @return Deleted medical record
+	 */
 	public MedicalRecord deleteMedicalRecord(MedicalRecord delMedicalRecord) {
 		jsonRepository.load();
 		MedicalRecords medicalRecords = jsonRepository.getAllMedicalRecords();

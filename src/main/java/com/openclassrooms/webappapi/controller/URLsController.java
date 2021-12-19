@@ -27,8 +27,14 @@ import com.openclassrooms.webappapi.service.URLsService;
  */
 @RestController
 public class URLsController {
+	/**
+	 * Logger
+	 */
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
+	/**
+	 * Required to process requests
+	 */
 	@Autowired
 	private URLsService urlsService;
 

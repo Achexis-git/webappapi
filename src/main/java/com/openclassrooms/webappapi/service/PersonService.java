@@ -12,13 +12,33 @@ import com.openclassrooms.webappapi.model.Person;
 import com.openclassrooms.webappapi.model.Persons;
 import com.openclassrooms.webappapi.repository.JsonRepository;
 
+/**
+ * Execute the instructions send by the associated controller
+ * 
+ * @author alexis
+ * @version 1.0
+ * @see com.openclassrooms.webappapi.controller.PersonController
+ *
+ */
 @Service
 public class PersonService {
+	/**
+	 * Logger
+	 */
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
+	/**
+	 * Allows interact with the file
+	 */
 	@Autowired
 	private JsonRepository jsonRepository;
 
+	/**
+	 * Load the person, add the new person, and save the new list
+	 * 
+	 * @param newPerson Person record to add
+	 * @return Added person
+	 */
 	public Person createPerson(Person newPerson) {
 		jsonRepository.load();
 		Persons persons = jsonRepository.getAllPersons();
@@ -32,11 +52,22 @@ public class PersonService {
 		return persons.getPersonList().get(persons.getPersonList().size() - 1);
 	}
 
+	/**
+	 * Load the persons and get them all
+	 * 
+	 * @return An object containing the persons
+	 */
 	public Persons readPersons() {
 		jsonRepository.load();
 		return jsonRepository.getAllPersons();
 	}
 
+	/**
+	 * Load the persons, update the persons and save the new list
+	 * 
+	 * @param newPerson Person to update
+	 * @return Updated person
+	 */
 	public Person updatePerson(Person newPerson) {
 		jsonRepository.load();
 		Persons persons = jsonRepository.getAllPersons();
@@ -66,6 +97,13 @@ public class PersonService {
 		return updatedPerson;
 	}
 
+	/**
+	 * Load the persons, delete the person and save the new list
+	 * 
+	 * @param firstName Person first name
+	 * @param lastName Person last name
+	 * @return Deleted person
+	 */
 	public Person deletePerson(String firstName, String lastName) {
 		jsonRepository.load();
 		Persons persons = jsonRepository.getAllPersons();

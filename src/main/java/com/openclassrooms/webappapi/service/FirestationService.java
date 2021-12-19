@@ -22,8 +22,14 @@ import com.openclassrooms.webappapi.repository.JsonRepository;
  */
 @Service
 public class FirestationService {
+	/**
+	 * Logger
+	 */
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
+	/**
+	 * Allows interact with the file
+	 */
 	@Autowired
 	private JsonRepository jsonRepository;
 

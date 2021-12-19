@@ -25,8 +25,14 @@ import com.openclassrooms.webappapi.service.PersonService;
  */
 @RestController
 public class PersonController {
+	/**
+	 * Logger
+	 */
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
+	/**
+	 * Required to process requests
+	 */
 	@Autowired
 	private PersonService personService;
 

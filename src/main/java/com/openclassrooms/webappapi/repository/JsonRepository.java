@@ -27,7 +27,9 @@ import com.openclassrooms.webappapi.model.Persons;
  */
 @Repository
 public class JsonRepository {
-
+	/**
+	 * Logger
+	 */
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
 	/**

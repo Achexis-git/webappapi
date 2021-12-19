@@ -29,16 +29,39 @@ import com.openclassrooms.webappapi.model.response.PersonInfo;
 import com.openclassrooms.webappapi.model.response.PersonsAndCountdown;
 import com.openclassrooms.webappapi.repository.JsonRepository;
 
+/**
+ * Execute the instructions send by the associated controller
+ * 
+ * @author alexis
+ * @version 1.0
+ * @see com.openclassrooms.webappapi.controller.URLsController
+ *
+ */
 @Service
 public class URLsService {
 
 	// TODO : Potentiel problèmes si persons et medical records pas en accord entre
 	// eux
+	
+	/**
+	 * Logger
+	 */
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
+	/**
+	 * Allows interact with the file
+	 */
 	@Autowired
 	private JsonRepository jsonRepository;
 
+	/**
+	 * Load the persons, medical records and firestations; analyze them and return
+	 * the asked information
+	 * 
+	 * @param stationNumber Firestation number
+	 * @return An object containing a list of persons covered and a countdown of the
+	 *         children and adults
+	 */
 	public PersonsAndCountdown getPeoplesCloseToFireStation(int stationNumber) {
 		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
@@ -92,6 +115,13 @@ public class URLsService {
 		return pc;
 	}
 
+	/**
+	 * Load the persons and medical records; analyze them and return
+	 * the asked information
+	 * 
+	 * @param address Home address
+	 * @return An object containing the address, a list of childs, a list of adults
+	 */
 	public HomeChildren getChildAddress(String address) {
 		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
@@ -143,6 +173,13 @@ public class URLsService {
 		return hc;
 	}
 
+	/**
+	 * Load the persons and firestations; analyze them and return
+	 * the asked information
+	 * 
+	 * @param stationNumber Firestation number
+	 * @return A list of strings with the phone numbers
+	 */
 	public List<String> getPhoneCloseToFirestation(int stationNumber) {
 		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
@@ -170,6 +207,13 @@ public class URLsService {
 		return phoneList;
 	}
 
+	/**
+	 * Load the persons; analyze them and return
+	 * the asked information
+	 * 
+	 * @param city City name
+	 * @return List of strings of the email addresses
+	 */
 	public List<String> getAllEmailCity(String city) {
 		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
@@ -189,6 +233,14 @@ public class URLsService {
 		return emails;
 	}
 
+	/**
+	 * Load the persons, medical records and firestations; analyze them and return
+	 * the asked information
+	 * 
+	 * @param address Address of the firestation
+	 * @return An object containing the firestation that serve this address and a
+	 *         home containing informations about the inhabitants
+	 */
 	public InhabitantFire getPosologieCloseToFirestation(String address) {
 		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
@@ -245,6 +297,13 @@ public class URLsService {
 		return iFire;
 	}
 
+	/**
+	 * Load the persons, medical records and firestations; analyze them and return
+	 * the asked information
+	 * 
+	 * @param stations Firestation numbers
+	 * @return A list of home of served by the firestations
+	 */
 	public List<Home> getHomesCloseToStations(List<Integer> stations) {
 		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();
@@ -302,6 +361,12 @@ public class URLsService {
 		return homes;
 	}
 
+	/**
+	 * Compute the age of the person based on its birth date
+	 * 
+	 * @param birthday Birth date at format "MM/DD/YYYY"
+	 * @return Age in years
+	 */
 	private int computeAge(String birthday) {
 		Calendar today = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
 
@@ -325,6 +390,14 @@ public class URLsService {
 		return age;
 	}
 
+	/**
+	 * Load the persons, medical records and firestations; analyze them and return
+	 * the asked information
+	 * 
+	 * @param firstName Person first name
+	 * @param lastName Person last name
+	 * @return An object containing the personal informations
+	 */
 	public List<PersonInfo> getPersonInfo(String firstName, String lastName) {
 		jsonRepository.load();
 		List<Person> pList = jsonRepository.getAllPersons().getPersonList();

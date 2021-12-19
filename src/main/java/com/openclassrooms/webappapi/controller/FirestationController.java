@@ -25,8 +25,14 @@ import com.openclassrooms.webappapi.service.FirestationService;
  */
 @RestController
 public class FirestationController {
+	/**
+	 * Logger
+	 */
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
+	/**
+	 * Required to process requests
+	 */
 	@Autowired
 	private FirestationService fsService;
 

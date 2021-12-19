@@ -25,8 +25,14 @@ import com.openclassrooms.webappapi.service.MedicalRecordService;
  */
 @RestController
 public class MedicalRecordController {
+	/**
+	 * Logger
+	 */
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
+	/**
+	 * Required to process requests
+	 */
 	@Autowired
 	MedicalRecordService mrService;
 

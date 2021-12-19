@@ -16,6 +16,9 @@ import com.openclassrooms.webappapi.WebappapiApplication;
  *
  */
 public class FireStations {
+	/**
+	 * Logger
+	 */
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
 	private List<FireStation> fsList;
