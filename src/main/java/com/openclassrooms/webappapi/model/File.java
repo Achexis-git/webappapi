@@ -4,7 +4,13 @@ import java.util.List;
 
 import lombok.Data;
 
-// Only used in JsonRepository to use jsoniter
+/**
+ * Class used to load the file using jsoniter
+ * 
+ * @author alexis
+ * @version 1.0
+ *
+ */
 @Data
 public class File {
 	private List<Person> persons;

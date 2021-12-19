@@ -5,6 +5,13 @@ import com.jsoniter.fuzzy.MaybeStringIntDecoder;
 
 import lombok.Data;
 
+/**
+ * Firestation container
+ * 
+ * @author alexis
+ * @version 1.0
+ *
+ */
 @Data
 public class FireStation {
 

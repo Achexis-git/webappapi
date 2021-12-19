@@ -15,6 +15,14 @@ import com.openclassrooms.webappapi.model.FireStation;
 import com.openclassrooms.webappapi.model.FireStations;
 import com.openclassrooms.webappapi.service.FirestationService;
 
+/**
+ * CRUD controller for firestations
+ * 
+ * @author alexis
+ * @version 1.0
+ * @see com.openclassrooms.webappapi.service.FirestationService
+ *
+ */
 @RestController
 public class FirestationController {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
@@ -22,6 +30,12 @@ public class FirestationController {
 	@Autowired
 	private FirestationService fsService;
 
+	/**
+	 * Add to the list of firestations the firestation sends in parameter
+	 * 
+	 * @param firestation Firestation to add
+	 * @return Added firestation
+	 */
 	// Body example : { "address":"37 12th St", "station":"2" }
 	@PostMapping(path = "/firestation", consumes = "application/json", produces = "application/json")
 	public FireStation postFirestation(@RequestBody FireStation firestation) {

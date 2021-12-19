@@ -15,6 +15,14 @@ import com.openclassrooms.webappapi.model.Person;
 import com.openclassrooms.webappapi.model.Persons;
 import com.openclassrooms.webappapi.service.PersonService;
 
+/**
+ * CRUD controller for persons
+ * 
+ * @author alexis
+ * @version 1.0
+ * @see com.openclassrooms.webappapi.service.PersonService
+ *
+ */
 @RestController
 public class PersonController {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);

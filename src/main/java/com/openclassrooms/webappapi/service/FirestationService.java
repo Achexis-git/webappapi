@@ -12,6 +12,14 @@ import com.openclassrooms.webappapi.model.FireStation;
 import com.openclassrooms.webappapi.model.FireStations;
 import com.openclassrooms.webappapi.repository.JsonRepository;
 
+/**
+ * Execute the instructions send by the associated controller
+ * 
+ * @author alexis
+ * @version 1.0
+ * @see com.openclassrooms.webappapi.controller.FirestationController
+ *
+ */
 @Service
 public class FirestationService {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
@@ -19,6 +27,12 @@ public class FirestationService {
 	@Autowired
 	private JsonRepository jsonRepository;
 
+	/**
+	 * Load the firestations, add the new firestation, and save the new list
+	 * 
+	 * @param newFirestation Firestation to add
+	 * @return Added firestation
+	 */
 	public FireStation createFirestation(FireStation newFirestation) {
 		jsonRepository.load();
 		FireStations firestations = jsonRepository.getAllFireStations();
@@ -32,11 +46,20 @@ public class FirestationService {
 		return firestations.getFsList().get(firestations.getFsList().size() - 1);
 	}
 
+	/**
+	 * Load the firestations and get them all
+	 * @return An object containing the firestations
+	 */
 	public FireStations readFirestations() {
 		jsonRepository.load();
 		return jsonRepository.getAllFireStations();
 	}
 
+	/**
+	 * Load the firestations, update the firestation at the given address and save the new list
+	 * @param newFirestation Firestation to update
+	 * @return Updated firestation
+	 */
 	public FireStation updateFirestation(FireStation newFirestation) {
 		jsonRepository.load();
 		FireStations firestations = jsonRepository.getAllFireStations();
@@ -64,6 +87,12 @@ public class FirestationService {
 		return updatedFirestation;
 	}
 
+	/**
+	 * Load the firestations, delete the firestation with the right address and save the new list
+	 * 
+	 * @param delFirestation Firestation to delete
+	 * @return Deleted firestation
+	 */
 	public FireStation deleteFirestation(FireStation delFirestation) {
 		jsonRepository.load();
 		FireStations firestations = jsonRepository.getAllFireStations();

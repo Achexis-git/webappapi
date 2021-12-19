@@ -8,6 +8,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.openclassrooms.webappapi.WebappapiApplication;
 
+/**
+ * Handling of a list of medical records
+ * 
+ * @author alexis
+ * @version 1.0
+ *
+ */
 public class MedicalRecords {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
@@ -25,10 +32,21 @@ public class MedicalRecords {
 		this.mrList = new ArrayList<MedicalRecord>(mrList);
 	}
 
+	/**
+	 * Add a medical record at the end of the list
+	 * 
+	 * @param mr Medical record to add
+	 */
 	public void addMedicalRecord(MedicalRecord mr) {
 		this.mrList.add(mr);
 	}
 
+	/**
+	 * Modify the medical record at the given index
+	 * 
+	 * @param i Index
+	 * @param mr New medical record
+	 */
 	public void setMrIndex(int i, MedicalRecord mr) {
 		if (i >= 0 && i < mrList.size()) {
 			mrList.set(i, mr);
@@ -37,6 +55,11 @@ public class MedicalRecords {
 		}
 	}
 
+	/**
+	 * Remove the medical record at the given index
+	 * 
+	 * @param i Index
+	 */
 	public void removeMrIndex(int i) {
 		if (i >= 0 && i < mrList.size()) {
 			mrList.remove(i);

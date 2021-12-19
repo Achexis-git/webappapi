@@ -18,16 +18,38 @@ import com.openclassrooms.webappapi.model.FireStations;
 import com.openclassrooms.webappapi.model.MedicalRecords;
 import com.openclassrooms.webappapi.model.Persons;
 
+/**
+ * Allows to read and write in files and get the informations
+ *  
+ * @author alexis
+ * @version 1.0
+ *
+ */
 @Repository
 public class JsonRepository {
 
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
+	/**
+	 * Filepath of the file to read
+	 */
 	private static String jsonFilepathRead = System.getProperty("user.dir") + "/src/main/resources/data.json";
+	/**
+	 * Filepath of the file in which write
+	 */
 	private static String jsonFilepathWrite = System.getProperty("user.dir") + "/src/main/resources/dataTestWrite.json";
 
+	/**
+	 * Persons in the file
+	 */
 	private static Persons persons = new Persons();
+	/**
+	 * Firestations in the file
+	 */
 	private static FireStations fireStations = new FireStations();
+	/**
+	 * Medical records in the file
+	 */
 	private static MedicalRecords medicalRecords = new MedicalRecords();
 
 	// If modify the file & attributes not update => true (need to reread the file)
@@ -84,6 +106,11 @@ public class JsonRepository {
 		fileUnSaved = true;
 	}
 
+	/**
+	 * Verify if the file is already saved, if not call the method to write in the file
+	 * 
+	 * @see JsonRepository#writeJson() 
+	 */
 	public void save() {
 		if (fileUnSaved) {
 			writeJson();
@@ -94,6 +121,11 @@ public class JsonRepository {
 		}
 	}
 
+	/**
+	 * Verify if the file is already loaded, if not call a method to read the file
+	 * 
+	 * @see JsonRepository#readJson()
+	 */
 	public void load() {
 		if (fileChanged) {
 			readJson();
@@ -107,6 +139,11 @@ public class JsonRepository {
 		}
 	}
 
+	/**
+	 * Read the file
+	 * 
+	 * @see JsonRepository#jsonFilepathRead
+	 */
 	private void readJson() {
 		// 1) Open the file
 		try (BufferedReader reader = new BufferedReader(new FileReader(jsonFilepathRead))) {
@@ -138,6 +175,11 @@ public class JsonRepository {
 		logger.debug("All correctly loaded");
 	}
 
+	/**
+	 * Write the file
+	 * 
+	 * @see JsonRepository#jsonFilepathWrite
+	 */
 	private void writeJson() {
 		// 1) Create the object that will be serialized
 		File file = new File();

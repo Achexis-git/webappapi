@@ -2,6 +2,13 @@ package com.openclassrooms.webappapi.model;
 
 import java.util.List;
 
+/**
+ * Medical record container
+ * 
+ * @author alexis
+ * @version 1.0
+ *
+ */
 public class MedicalRecord {
 
 	private String firstName;

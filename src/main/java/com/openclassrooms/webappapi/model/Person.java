@@ -2,6 +2,13 @@ package com.openclassrooms.webappapi.model;
 
 import com.jsoniter.annotation.JsonIgnore;
 
+/**
+ * Person container
+ * 
+ * @author alexis
+ * @version 1.0
+ *
+ */
 public class Person {
 
 	@JsonIgnore

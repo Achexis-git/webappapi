@@ -8,6 +8,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.openclassrooms.webappapi.WebappapiApplication;
 
+/**
+ * Handling of a list of persons
+ * 
+ * @author alexis
+ * @version 1.0
+ *
+ */
 public class Persons {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
 
@@ -28,10 +35,21 @@ public class Persons {
 		this.personList = new ArrayList<Person>(personList);
 	}
 
+	/**
+	 * Add a new person at the end of the list
+	 * 
+	 * @param person Person to add
+	 */
 	public void addPerson(Person person) {
 		this.personList.add(person);
 	}
 
+	/**
+	 * Modify person at the given index
+	 * 
+	 * @param i Index
+	 * @param p New person
+	 */
 	public void setPersonIndex(int i, Person p) {
 		if (i >= 0 && i < personList.size()) {
 			personList.set(i, p);
@@ -40,6 +58,11 @@ public class Persons {
 		}
 	}
 
+	/**
+	 * Remove person at the given index
+	 * 
+	 * @param i Index
+	 */
 	public void removePersonIndex(int i) {
 		if (i >= 0 && i < personList.size()) {
 			personList.remove(i);

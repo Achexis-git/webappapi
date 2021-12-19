@@ -15,6 +15,14 @@ import com.openclassrooms.webappapi.model.MedicalRecord;
 import com.openclassrooms.webappapi.model.MedicalRecords;
 import com.openclassrooms.webappapi.service.MedicalRecordService;
 
+/**
+ * CRUD controller for medical records
+ * 
+ * @author alexis
+ * @version 1.0
+ * @see com.openclassrooms.webappapi.service.MedicalRecordService
+ *
+ */
 @RestController
 public class MedicalRecordController {
 	private static final Logger logger = LogManager.getLogger(WebappapiApplication.class);
