@@ -88,7 +88,7 @@ public class URLsService {
 						for (MedicalRecord mr : mrList) {
 							// 7) If same first name, last name
 							if (p.getFirstName().compareTo(mr.getFirstName()) == 0
-									& p.getLastName().compareTo(mr.getLastName()) == 0) {
+									&& p.getLastName().compareTo(mr.getLastName()) == 0) {
 								// 8) Compute age and increment the variable
 								if (computeAge(mr.getBirthdate()) > 18) {
 									adultsCountdown++;
@@ -141,7 +141,7 @@ public class URLsService {
 				for (MedicalRecord mr : mrList) {
 					// 4) If same first name, last name
 					if (mr.getFirstName().compareTo(p.getFirstName()) == 0
-							& mr.getLastName().compareTo(p.getLastName()) == 0) {
+							&& mr.getLastName().compareTo(p.getLastName()) == 0) {
 						// 5) Compute age
 						int age = computeAge(mr.getBirthdate());
 						// 6) Complete the list
@@ -276,7 +276,7 @@ public class URLsService {
 				for (MedicalRecord mr : mrList) {
 					// 2.5 If same first name, last name
 					if (mr.getFirstName().compareTo(p.getFirstName()) == 0
-							& mr.getLastName().compareTo(p.getLastName()) == 0) {
+							&& mr.getLastName().compareTo(p.getLastName()) == 0) {
 						// 2.6) Add the mr
 						hi.setMedication(mr.getMedications());
 						hi.setAllergies(mr.getAllergies());
@@ -337,7 +337,7 @@ public class URLsService {
 						for (MedicalRecord mr : mrList) {
 							// 8) If same first name, last name
 							if (mr.getFirstName().compareTo(hi.getFirstName()) == 0
-									& mr.getLastName().compareTo(hi.getLastName()) == 0) {
+									&& mr.getLastName().compareTo(hi.getLastName()) == 0) {
 								// 9) Add mr at home inhabitant
 								hi.setMedication(mr.getMedications());
 								hi.setAllergies(mr.getAllergies());
@@ -410,7 +410,7 @@ public class URLsService {
 		for (int i = 0; i < pList.size(); i++) {
 			Person p = pList.get(i);
 			// 2) If same first name, last name
-			if (p.getFirstName().compareTo(firstName) == 0 & p.getLastName().compareTo(lastName) == 0) {
+			if (p.getFirstName().compareTo(firstName) == 0 && p.getLastName().compareTo(lastName) == 0) {
 				logger.debug("Got a person with the right name");
 				// 3) Create personInfo and initialize its attributes
 				PersonInfo pi = new PersonInfo();

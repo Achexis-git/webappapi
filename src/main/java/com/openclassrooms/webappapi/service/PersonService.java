@@ -80,7 +80,7 @@ public class PersonService {
 			Person p = pList.get(i);
 			// 2) If same first name, last name
 			if (p.getFirstName().compareTo(newPerson.getFirstName()) == 0
-					& p.getLastName().compareTo(newPerson.getLastName()) == 0) {
+					&& p.getLastName().compareTo(newPerson.getLastName()) == 0) {
 				// 3) Take list index
 				persons.setPersonIndex(i, newPerson);
 				logger.info("Updated person : {} {}", newPerson.getFirstName(), newPerson.getLastName());
@@ -115,7 +115,7 @@ public class PersonService {
 		for (int i = 0; i < pList.size(); i++) {
 			Person p = pList.get(i);
 			// 2) If same first name, last name
-			if (p.getFirstName().compareTo(firstName) == 0 & p.getLastName().compareTo(lastName) == 0) {
+			if (p.getFirstName().compareTo(firstName) == 0 && p.getLastName().compareTo(lastName) == 0) {
 				// 3) Delete the person
 				persons.removePersonIndex(i);
 				logger.info("Deleted person : {} {}", firstName, lastName);
