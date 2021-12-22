@@ -421,7 +421,7 @@ public class URLsService {
 				// 4) Browse medical records
 				for (MedicalRecord mr : mrList) {
 					// 5) If same first name, last name
-					if (mr.getFirstName().compareTo(firstName) == 0 & mr.getLastName().compareTo(lastName) == 0) {
+					if (mr.getFirstName().compareTo(firstName) == 0 && mr.getLastName().compareTo(lastName) == 0) {
 						logger.debug("Got a medical record with the right name");
 						// 6) Add values person info
 						pi.setMedication(mr.getMedications());
