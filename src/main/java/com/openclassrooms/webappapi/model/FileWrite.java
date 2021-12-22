@@ -12,7 +12,7 @@ import lombok.Data;
  *
  */
 @Data
-public class File {
+public class FileWrite {
 	private List<Person> persons;
 	private List<FireStation> firestations;
 	private List<MedicalRecord> medicalrecords;

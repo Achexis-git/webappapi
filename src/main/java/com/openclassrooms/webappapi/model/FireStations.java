@@ -26,6 +26,10 @@ public class FireStations {
 	public FireStations() {
 		this.fsList = new ArrayList<>();
 	}
+	
+	public void resetList() {
+		fsList = new ArrayList<>();
+	}
 
 	public List<FireStation> getFsList() {
 		return new ArrayList<FireStation>(fsList);

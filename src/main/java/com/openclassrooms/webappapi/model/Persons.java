@@ -27,6 +27,10 @@ public class Persons {
 		this.personList = new ArrayList<>();
 	}
 
+	public void resetList() {
+		personList = new ArrayList<>();
+	}
+	
 	public List<Person> getPersonList() {
 		if (personList == null) {
 			personList = new ArrayList<>();

@@ -70,4 +70,16 @@ public class MedicalRecords {
 			logger.error("Want to delete out of index medical record");
 		}
 	}
+
+	/**
+	 * 
+	 */
+	public void resetList() {
+		mrList = new ArrayList<>();
+		
+	}
+	
+	public int numberOfMedicalRecords() {
+		return mrList.size();
+	}
 }

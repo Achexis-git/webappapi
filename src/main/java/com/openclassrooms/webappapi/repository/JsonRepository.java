@@ -2,25 +2,36 @@ package com.openclassrooms.webappapi.repository;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import java.io.File;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.jsoniter.JsonIterator;
+import com.jsoniter.any.Any;
 import com.jsoniter.output.JsonStream;
 import com.openclassrooms.webappapi.WebappapiApplication;
-import com.openclassrooms.webappapi.model.File;
+import com.openclassrooms.webappapi.model.FireStation;
+import com.openclassrooms.webappapi.model.FileWrite;
 import com.openclassrooms.webappapi.model.FireStations;
+import com.openclassrooms.webappapi.model.MedicalRecord;
 import com.openclassrooms.webappapi.model.MedicalRecords;
+import com.openclassrooms.webappapi.model.Person;
 import com.openclassrooms.webappapi.model.Persons;
 
 /**
  * Allows to read and write in files and get the informations
- *  
+ * 
  * @author alexis
  * @version 1.0
  *
@@ -109,9 +120,10 @@ public class JsonRepository {
 	}
 
 	/**
-	 * Verify if the file is already saved, if not call the method to write in the file
+	 * Verify if the file is already saved, if not call the method to write in the
+	 * file
 	 * 
-	 * @see JsonRepository#writeJson() 
+	 * @see JsonRepository#writeJson()
 	 */
 	public void save() {
 		if (fileUnSaved) {
@@ -148,27 +160,54 @@ public class JsonRepository {
 	 */
 	private void readJson() {
 		// 1) Open the file
-		try (BufferedReader reader = new BufferedReader(new FileReader(jsonFilepathRead))) {
+		try {
+			byte[] bytesFile = Files.readAllBytes(new File(jsonFilepathRead).toPath());
 			logger.info("Open data.json file");
 
-			// 2) Copy the content of the file into one string
-			String stringFile = "";
-			String line = reader.readLine();
-			while (line != null) {
-				stringFile += line;
-				logger.trace(line);
-				line = reader.readLine();
+			// 2) Parse the file
+			JsonIterator iter = JsonIterator.parse(bytesFile);
+
+			// 3) Extract each list
+			Any any = iter.readAny();
+			Any personAny = any.get("persons");
+			Any fsAny = any.get("firestations");
+			Any mrAny = any.get("medicalrecords");
+
+			// 4) Put the persons into the attribute
+			persons.resetList();
+
+			personAny.forEach(a -> persons.addPerson(new Person(0, a.get("firstName").toString(),
+					a.get("lastName").toString(), a.get("address").toString(), a.get("city").toString(),
+					a.get("zip").toString(), a.get("phone").toString(), a.get("email").toString())));
+
+			// 5) Put the firestations into the attributes
+			fireStations.resetList();
+
+			fsAny.forEach(a -> fireStations
+					.addFireStation(new FireStation(a.get("address").toString(), a.get("station").toInt())));
+
+			// 6) Put the medical records into the attributes
+			medicalRecords.resetList();
+
+			mrAny.forEach(a -> medicalRecords
+					.addMedicalRecord(new MedicalRecord(a.get("firstName").toString(), a.get("lastName").toString(),
+							a.get("birthdate").toString(), new ArrayList<>(), new ArrayList<>())));
+
+			// 6.2) Extract and put the medications and allergies into the attributes
+			logger.debug("Medical records loaded");
+			for (int i = 0; i < medicalRecords.numberOfMedicalRecords(); i++) {
+				MedicalRecord mr = medicalRecords.getMrList().get(i);
+
+				List<String> medications = new ArrayList<>();
+				mrAny.get(i).get("medications").forEach(m -> medications.add(m.toString()));
+
+				List<String> allergies = new ArrayList<>();
+				mrAny.get(i).get("allergies").forEach(a -> allergies.add(a.toString()));
+
+				mr.setMedication(medications);
+				mr.setAllergies(allergies);
+				medicalRecords.setMrIndex(i, mr);
 			}
-
-			// 3) Deserialize the string into an object File
-			File file = JsonIterator.deserialize(stringFile, File.class);
-			logger.debug("Deserialization succeeded");
-
-			// 4) Set the static objects
-			persons.setPersonList(file.getPersons());
-			fireStations.setFsList(file.getFirestations());
-			medicalRecords.setMrList(file.getMedicalrecords());
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -184,7 +223,7 @@ public class JsonRepository {
 	 */
 	private void writeJson() {
 		// 1) Create the object that will be serialized
-		File file = new File();
+		FileWrite file = new FileWrite();
 		// 2) Set the attributes
 		file.setPersons(persons.getPersonList());
 		file.setFirestations(fireStations.getFsList());
@@ -194,12 +233,13 @@ public class JsonRepository {
 		String stringToSave = JsonStream.serialize(file);
 
 		// 4) Open JSON file
-		try (FileWriter writer = new FileWriter(jsonFilepathWrite)) {
+		try (Writer writer = new OutputStreamWriter(new FileOutputStream(new File(jsonFilepathWrite)))) {
 			// 5) Write the string into the file
 			writer.write(stringToSave);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		logger.debug("File correctly saved");
+
 	}
 }
