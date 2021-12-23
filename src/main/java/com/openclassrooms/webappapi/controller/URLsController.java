@@ -48,7 +48,7 @@ public class URLsController {
 	// http://localhost:8080/firestation?stationNumber=<station_number>
 	@GetMapping("/firestation")
 	public PersonsAndCountdown getFirestationStationNumber(@RequestParam(name = "stationNumber") int sn) {
-		logger.info("Request 1 received");
+		logger.info("Request informations about persons served by the firestation n° " + sn);
 		return urlsService.getPeoplesCloseToFireStation(sn);
 	}
 
@@ -61,7 +61,7 @@ public class URLsController {
 	// http://localhost:8080/childAlert?address=<address>
 	@GetMapping("/childAlert")
 	public HomeChildren getEnfantAddress(@RequestParam String address) {
-		logger.info("Request 2 received");
+		logger.info("Request informations about children living at : " + address);
 		return urlsService.getChildAddress(address);
 	}
 
@@ -74,7 +74,7 @@ public class URLsController {
 	// http://localhost:8080/phoneAlert?firestation=<firestation_number>
 	@GetMapping("/phoneAlert")
 	public List<String> getPhoneAlertFirestation(@RequestParam(name = "firestation") int stationNumber) {
-		logger.info("Request 3 received");
+		logger.info("Request phone numbers of residents served by the firestion n° " + stationNumber);
 		return urlsService.getPhoneCloseToFirestation(stationNumber);
 	}
 
@@ -88,7 +88,7 @@ public class URLsController {
 	// http://localhost:8080/fire?address=<address>
 	@GetMapping("/fire")
 	public InhabitantFire getFireAddress(@RequestParam String address) {
-		logger.info("Request 4 received");
+		logger.info("Request infromations about inhabitants living at the address : " + address);
 		return urlsService.getPosologieCloseToFirestation(address);
 	}
 
@@ -102,7 +102,7 @@ public class URLsController {
 	// ex : http://localhost:8080/flood/stations?stations=1&stations=2
 	@GetMapping("/flood/stations")
 	public List<Home> getFloodStationsStations(@RequestParam List<Integer> stations) {
-		logger.info("Request 5 received");
+		logger.info("Request a list of homes served by the firestions n° " + stations.toString());
 		return urlsService.getHomesCloseToStations(stations);
 	}
 
@@ -116,7 +116,7 @@ public class URLsController {
 	// http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
 	@GetMapping("/personInfo")
 	public List<PersonInfo> getpersonInfoName(@RequestParam String firstName, @RequestParam String lastName) {
-		logger.info("Request 6 received");
+		logger.info("Request personal informations about " + firstName + " " + lastName);
 		// List<PersonInfo> pi = getService.getPersonInfo(firstName, lastName);
 		return urlsService.getPersonInfo(firstName, lastName);
 	}
@@ -130,7 +130,7 @@ public class URLsController {
 	// http://localhost:8080/communityEmail?city=<city>
 	@GetMapping("/communityEmail")
 	public List<String> getCommunityEmailCity(@RequestParam String city) {
-		logger.info("Request 7 received");
+		logger.info("Request all emails of persons living in " + city);
 		return urlsService.getAllEmailCity(city);
 	}
 

@@ -38,7 +38,7 @@ public class PersonController {
 
 	@GetMapping(path = "/person", produces = "application/json")
 	public Persons getPersons() {
-		logger.info("Getting persons");
+		logger.info("Get all persons");
 		return personService.readPersons();
 	}
 
@@ -47,6 +47,7 @@ public class PersonController {
 	// "phone":"841-874-7458", "email":"wc@email.com" }
 	@PostMapping(path = "/person", consumes = "application/json", produces = "application/json")
 	public Person postPerson(@RequestBody Person person) {
+		logger.info("Post a new person");
 		return personService.createPerson(person);
 	}
 
@@ -55,12 +56,14 @@ public class PersonController {
 	// "email":"jb@email.com" }
 	@PutMapping(path = "/person", consumes = "application/json", produces = "application/json")
 	public Person putPerson(@RequestBody Person person) {
+		logger.info("Update a person");
 		return personService.updatePerson(person);
 	}
 
 	// Body example : { "firstName":"John", "lastName":"Boyd" }
 	@DeleteMapping(path = "/person", consumes = "application/json", produces = "application/json")
 	public Person deletePerson(@RequestBody Person person) {
+		logger.info("Delete a person");
 		return personService.deletePerson(person.getFirstName(), person.getLastName());
 	}
 }

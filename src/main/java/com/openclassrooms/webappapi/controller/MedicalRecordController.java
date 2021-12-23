@@ -38,22 +38,25 @@ public class MedicalRecordController {
 
 	@PostMapping(path = "/medicalrecord", consumes = "application/json", produces = "application/json")
 	public MedicalRecord postMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+		logger.info("Post a new medical record");
 		return mrService.createMedicalRecord(medicalRecord);
 	}
 
 	@GetMapping(path = "/medicalrecord", produces = "application/json")
 	public MedicalRecords getMedicalRecords() {
-		logger.info("Getting medical records");
+		logger.info("Get all medical records");
 		return mrService.readMedicalRecords();
 	}
 
 	@PutMapping(path = "/medicalrecord", consumes = "application/json", produces = "application/json")
 	public MedicalRecord putMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+		logger.info("Update a medical record");
 		return mrService.updateMedicalRecord(medicalRecord);
 	}
 
 	@DeleteMapping(path = "/medicalrecord", consumes = "application/json", produces = "application/json")
 	public MedicalRecord deleteMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+		logger.info("Delete a medical record");
 		return mrService.deleteMedicalRecord(medicalRecord);
 	}
 }

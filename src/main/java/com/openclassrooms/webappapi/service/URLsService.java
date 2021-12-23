@@ -112,6 +112,7 @@ public class URLsService {
 		pc.setAdultCountdown(adultsCountdown);
 		pc.setChildrenCountdown(childrenCountdown);
 
+		logger.info(pc.getChildrenCountdown() + " children and " + pc.getAdultCountdown() + " live close to the firestation");
 		return pc;
 	}
 
@@ -170,6 +171,7 @@ public class URLsService {
 		hc.setAdultList(adultList);
 		hc.setChildList(childList);
 
+		logger.info(hc.getChildList().size() + " children live at : " + hc.getAddress());
 		return hc;
 	}
 
@@ -204,6 +206,8 @@ public class URLsService {
 
 		// 6) Remove double
 		phoneList = new ArrayList<String>(new HashSet<String>(phoneList));
+		
+		logger.info(phoneList.size() + " phone  umbers have been found");
 		return phoneList;
 	}
 
@@ -230,6 +234,8 @@ public class URLsService {
 
 		// 3) Remove double
 		emails = new ArrayList<String>(new HashSet<String>(emails));
+		
+		logger.info(emails.size() + " emails have been found");
 		return emails;
 	}
 
@@ -294,6 +300,7 @@ public class URLsService {
 		// 2.9) Add the home at iFire
 		iFire.setHome(home);
 
+		logger.info(iFire.getHome().getHomeInhabitantList().size() + " inhabitants live at the address : " + address);
 		return iFire;
 	}
 
@@ -358,6 +365,8 @@ public class URLsService {
 				homes.add(home);
 			}
 		}
+		
+		logger.info(homes.size() + " homes are close to the firestation(s) n° " + stations.toString());
 		return homes;
 	}
 
@@ -437,6 +446,8 @@ public class URLsService {
 				piList.add(pi);
 			}
 		}
+		
+		logger.info(piList.size() + " persons have " + firstName + " " + lastName + " as name");
 		return piList;
 	}
 }

@@ -45,22 +45,25 @@ public class FirestationController {
 	// Body example : { "address":"37 12th St", "station":"2" }
 	@PostMapping(path = "/firestation", consumes = "application/json", produces = "application/json")
 	public FireStation postFirestation(@RequestBody FireStation firestation) {
+		logger.info("Post a new firestation");
 		return fsService.createFirestation(firestation);
 	}
 
 	@GetMapping(path = "/firestation/", produces = "application/json")
 	public FireStations getFireStations() {
-		logger.info("Getting firestations");
+		logger.info("Get all firestations");
 		return fsService.readFirestations();
 	}
 
 	@PutMapping(path = "/firestation", consumes = "application/json", produces = "application/json")
 	public FireStation putFirestation(@RequestBody FireStation firestation) {
+		logger.info("Update a firestation");
 		return fsService.updateFirestation(firestation);
 	}
 
 	@DeleteMapping(path = "/firestation", consumes = "application/json", produces = "application/json")
 	public FireStation deleteFirestation(@RequestBody FireStation firestation) {
+		logger.info("Delete a firestation");
 		return fsService.deleteFirestation(firestation);
 	}
 }
