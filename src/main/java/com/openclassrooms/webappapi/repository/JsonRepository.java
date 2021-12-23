@@ -226,13 +226,10 @@ public class JsonRepository {
 		file.setFirestations(fireStations.getFsList());
 		file.setMedicalrecords(medicalRecords.getMrList());
 
-		// 3) Serialize the object to get a string
-		String stringToSave = JsonStream.serialize(file);
-
-		// 4) Open JSON file
+		// 3) Open JSON file
 		try (Writer writer = new OutputStreamWriter(new FileOutputStream(new File(jsonFilepathWrite)))) {
-			// 5) Write the string into the file
-			writer.write(stringToSave);
+			// 4) Write the string into the file
+			writer.write(JsonStream.serialize(file));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
