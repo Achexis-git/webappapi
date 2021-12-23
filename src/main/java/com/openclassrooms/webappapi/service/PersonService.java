@@ -46,7 +46,7 @@ public class PersonService {
 		persons.addPerson(newPerson);
 		logger.info("Posted person : {} {}", newPerson.getFirstName(), newPerson.getLastName());
 
-		jsonRepository.setPersons(persons);
+		JsonRepository.setPersons(persons);
 		jsonRepository.save();
 
 		return persons.getPersonList().get(persons.getPersonList().size() - 1);
@@ -90,7 +90,7 @@ public class PersonService {
 		}
 
 		// 4) Set the jsonRepository
-		jsonRepository.setPersons(persons);
+		JsonRepository.setPersons(persons);
 		// 5) Save changes in file
 		jsonRepository.save();
 
@@ -125,7 +125,7 @@ public class PersonService {
 		}
 
 		// 4) Set the jsonRepository
-		jsonRepository.setPersons(persons);
+		JsonRepository.setPersons(persons);
 		// 5) Save changes in file
 		jsonRepository.save();
 

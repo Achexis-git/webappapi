@@ -46,7 +46,7 @@ public class MedicalRecordService {
 		medicalRecords.addMedicalRecord(newMedicalRecord);
 		logger.info("Posted medical record : {} {}", newMedicalRecord.getFirstName(), newMedicalRecord.getLastName());
 
-		jsonRepository.setMedicalRecords(medicalRecords);
+		JsonRepository.setMedicalRecords(medicalRecords);
 		jsonRepository.save();
 
 		return medicalRecords.getMrList().get(medicalRecords.getMrList().size() - 1);
@@ -90,7 +90,7 @@ public class MedicalRecordService {
 			}
 		}
 
-		jsonRepository.setMedicalRecords(medicalRecords);
+		JsonRepository.setMedicalRecords(medicalRecords);
 		jsonRepository.save();
 
 		return updatedMedicalRecord;
@@ -123,7 +123,7 @@ public class MedicalRecordService {
 			}
 		}
 
-		jsonRepository.setMedicalRecords(medicalRecords);
+		JsonRepository.setMedicalRecords(medicalRecords);
 		jsonRepository.save();
 
 		return deletedMedicalRecord;

@@ -46,7 +46,7 @@ public class FirestationService {
 		firestations.addFireStation(newFirestation);
 		logger.info("Posted firestation : {} at address {}", newFirestation.getStation(), newFirestation.getAddress());
 
-		jsonRepository.setFirestations(firestations);
+		JsonRepository.setFirestations(firestations);
 		jsonRepository.save();
 
 		return firestations.getFsList().get(firestations.getFsList().size() - 1);
@@ -87,7 +87,7 @@ public class FirestationService {
 			}
 		}
 
-		jsonRepository.setFirestations(firestations);
+		JsonRepository.setFirestations(firestations);
 		jsonRepository.save();
 
 		return updatedFirestation;
@@ -121,7 +121,7 @@ public class FirestationService {
 			}
 		}
 
-		jsonRepository.setFirestations(firestations);
+		JsonRepository.setFirestations(firestations);
 		jsonRepository.save();
 
 		return deletedFirestation;
