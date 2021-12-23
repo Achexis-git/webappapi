@@ -1,10 +1,7 @@
 package com.openclassrooms.webappapi.repository;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -95,28 +92,28 @@ public class JsonRepository {
 		return mr;
 	}
 
-	public void setPersons(Persons persons) {
+	public static void setPersons(Persons persons) {
 		Persons p = new Persons();
 		p.setPersonList(persons.getPersonList());
 		JsonRepository.persons = p;
 
-		fileUnSaved = true;
+		JsonRepository.fileUnSaved = true;
 	}
 
-	public void setFirestations(FireStations firestations) {
+	public static void setFirestations(FireStations firestations) {
 		FireStations fs = new FireStations();
 		fs.setFsList(firestations.getFsList());
 		JsonRepository.fireStations = fs;
 
-		fileUnSaved = true;
+		JsonRepository.fileUnSaved = true;
 	}
 
-	public void setMedicalRecords(MedicalRecords medicalRecords) {
+	public static void setMedicalRecords(MedicalRecords medicalRecords) {
 		MedicalRecords mr = new MedicalRecords();
 		mr.setMrList(medicalRecords.getMrList());
 		JsonRepository.medicalRecords = mr;
 
-		fileUnSaved = true;
+		JsonRepository.fileUnSaved = true;
 	}
 
 	/**
@@ -128,7 +125,7 @@ public class JsonRepository {
 	public void save() {
 		if (fileUnSaved) {
 			writeJson();
-			fileUnSaved = false;
+			JsonRepository.fileUnSaved = false;
 			logger.info("File saved");
 		} else {
 			logger.info("File already saved");
@@ -143,7 +140,7 @@ public class JsonRepository {
 	public void load() {
 		if (fileChanged) {
 			readJson();
-			fileChanged = false;
+			JsonRepository.fileChanged = false;
 			logger.info("File loaded");
 		} else {
 			logger.info("File already loaded");
